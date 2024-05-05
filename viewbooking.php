@@ -1,4 +1,3 @@
-
 <?php
 // Start session if not already started
 session_start();
@@ -57,7 +56,7 @@ if (mysqli_num_rows($result) > 0) {
 
     }
     // Display appointment data
-    foreach ($appointmentList['appointment'] as $appointment) {
+    /*foreach ($appointmentList['appointment'] as $appointment) {
         echo "<div>";
         echo "Booking ID: " . $appointment['bookingid'] . "<br>";
         echo "Mobile: " . $appointment['mobile'] . "<br>";
@@ -66,7 +65,7 @@ if (mysqli_num_rows($result) > 0) {
         echo "Time: " . $appointment['time'] . "<br>";
         echo "Special: " . $appointment['special'] . "<br>";
         echo "</div>"; 
-    }
+    }*/
 } else {
     // No appointments found
     echo "No appointments found for this user.";
@@ -75,6 +74,7 @@ if (mysqli_num_rows($result) > 0) {
 // Close database connection
 mysqli_close($conn);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -207,14 +207,29 @@ mysqli_close($conn);
     </div>
     <!-- Page Header End -->
 
-    <!-- Inside the content section where appointments will be displayed -->
-        <div class="appointment-list">
-    <!-- Appointments will be dynamically loaded here -->
+    <!-- Appointment Information Column Start -->
+<div class="container mt-5">
+    <div class="row">
+        <?php foreach ($appointmentList['appointment'] as $appointment): ?>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Appointment Details</h5>
+                    <p class="card-text">Mobile: <?php echo $appointment['mobile']; ?></p>
+                    <p class="card-text">Services: <?php echo $appointment['services']; ?></p>
+                    <p class="card-text">Date: <?php echo $appointment['date']; ?></p>
+                    <p class="card-text">Time: <?php echo $appointment['time']; ?></p>
+                    <p class="card-text">Special: <?php echo $appointment['special']; ?></p>
+                </div>
+            </div>
         </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+<!-- Appointment Information Column End -->
 
-        
 
-        <!-- Footer Start -->
+     <!-- Footer Start -->
         <div class="container-fluid bg-dark text-light footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
             <div class="container py-5">
                 <div class="row g-5">

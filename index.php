@@ -142,7 +142,7 @@ if (isset($_POST['submit'])) {
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Health</a>
                     <div class="dropdown-menu rounded-0 rounded-bottom m-0">
-                        <a href="feature.html" class="dropdown-item">Chronic Conditions</a>
+                        <a href="chronic.html" class="dropdown-item">Chronic Conditions</a>
                         <a href="symptoms.html" class="dropdown-item">Symptoms</a>
                         <a href="procedures.html" class="dropdown-item">Procedures & Treatments</a>
                     </div>
