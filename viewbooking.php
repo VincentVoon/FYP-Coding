@@ -141,8 +141,11 @@ mysqli_close($conn);
                     <small>+085-654219</small>
                 </div>
                 <div class="h-100 d-inline-flex align-items-center">
-                    <a class=" bg-lightblue text-primary me-1" href="loginnsignup.html"><i class="fas fa-user-plus me-1"></i></i>Login/Register
-            </div>
+                    <a class=" bg-lightblue text-primary me-1" href="login.php"><i class="fas fa-user me-1"></i></i>Login
+                
+                <div class="h-100 d-inline-flex align-items-center">
+                    <a class=" bg-lightblue text-primary me-1" href="signup.php"><i class="fas fa-user-plus me-1"></i></i>Register
+                </div>
         </div>
     </div>
     <!-- Topbar End -->
