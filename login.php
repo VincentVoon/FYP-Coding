@@ -48,44 +48,48 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 
 
-<!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
-<html lang="en" dir="ltr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Login form in HTML CSS | CodingLab </title> 
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="wrapper">
-  <div class="title-wrapper">
-    <h2>HarmonyCare</h2>
-</div>
-<form method="POST">
-    <div class="role-select">
+  <!DOCTYPE html>
+  <!-- Coding By CodingNepal - codingnepalweb.com -->
+    <html lang="en" dir="ltr">
+  <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Login form in HTML CSS | CodingLab </title> 
+        <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+        <div class="wrapper">
+        <div class="title-wrapper">
+        <h2>HarmonyCare</h2>
+        </div>
+
+
+    <form method="POST">
+      <div class="role-select">
         <select name="role" required>
             <option value="" disabled selected>Select Role</option>
             <option value="Caregiver">Caregiver</option>
             <option value="Care Recipient">Care Recipient</option>
         </select>
-    </div>
-    <div class="input-box">
+     </div>
+      <div class="input-box">
         <input type="text" placeholder="Email" name="email" required>
-    </div>
-    <div class="input-box">
+      </div>
+      <div class="input-box">
         <input type="password" placeholder="Password" name="password" required>
-    </div>
-    <div class="input-box button">
+      </div>
+      <div class="input-box button">
         <input type="submit" value="Login">
-    </div>
-    <div class="text">
+      </div>
+      <div class="text">
         <h3>Haven't signed up as a member? <a href="signup.php">Join Us Now</a></h3>
-    </div>
-</form>
+      </div>
+    </form>
 
-  </div>
-</body>
+    </div>
+
+  </body>
+  
 </html>
 
 

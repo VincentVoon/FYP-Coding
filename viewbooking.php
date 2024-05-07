@@ -141,8 +141,25 @@ mysqli_close($conn);
                     <small>+085-654219</small>
                 </div>
                 <div class="h-100 d-inline-flex align-items-center">
-                    <a class=" bg-lightblue text-primary me-1" href="loginnsignup.html"><i class="fas fa-user-plus me-1"></i></i>Login/Register
-            </div>
+                <?php
+                 if(isset($_SESSION['userid'])) {
+                    echo '<span class="text-primary me-1">Welcome Back!</span>';
+                    } else {
+                    echo '<a class=" bg-lightblue text-primary me-1" href="login.php"><i class="fas fa-user me-1"></i>Login</a>';
+                     }
+                ?>
+                </div>
+
+                <div class="h-100 d-inline-flex align-items-center">
+                <?php
+                if(isset($_SESSION['userid'])) {
+                 echo '<a class=" bg-lightblue text-primary me-1" href="login.php"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>';
+                 } else {
+                echo '<a class=" bg-lightblue text-primary me-1" href="login.php"><i class="fas fa-user me-1"></i>Login</a>';
+                echo '<a class=" bg-lightblue text-primary me-1" href="signup.php"><i class="fas fa-user-plus me-1"></i>Register</a>';
+                 }
+                ?>
+                </div>
         </div>
     </div>
     <!-- Topbar End -->
@@ -161,19 +178,19 @@ mysqli_close($conn);
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="index.php" class="nav-item nav-link">Home</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="service.html" class="nav-item nav-link">Service</a>
+                <a href="service.php" class="nav-item nav-link">Service</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Health</a>
                     <div class="dropdown-menu rounded-0 rounded-bottom m-0">
-                        <a href="feature.html" class="dropdown-item">Chronic Conditions</a>
-                        <a href="appointment.html" class="dropdown-item">Symptoms</a>
-                        <a href="404.html" class="dropdown-item">Procedures & Treatments</a>
+                        <a href="chronic.html" class="dropdown-item">Chronic Conditions</a>
+                        <a href="symptoms.html" class="dropdown-item">Symptoms</a>
+                        <a href="procedures.html" class="dropdown-item">Procedures & Treatments</a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Booking</a> 
                     <div class="dropdown-menu rounded-0 rounded-bottom m-0">
-                        <a href="viewbooking.html" class="dropdown-item">View Service Booking</a>
+                        <a href="viewbooking.php" class="dropdown-item">View Service Booking</a>
                 </div>
                 </div>
                 <div class="nav-item dropdown">
@@ -207,12 +224,12 @@ mysqli_close($conn);
     </div>
     <!-- Page Header End -->
 
-    <!-- Appointment Information Column Start -->
+<!-- Appointment Information Column Start -->
 <div class="container mt-5">
     <div class="row">
         <?php foreach ($appointmentList['appointment'] as $appointment): ?>
         <div class="col-md-6">
-            <div class="card mb-4">
+            <div class="card mb-4 border-black"> <!-- Added border-black class -->
                 <div class="card-body">
                     <h5 class="card-title">Appointment Details</h5>
                     <p class="card-text">Mobile: <?php echo $appointment['mobile']; ?></p>
@@ -227,6 +244,7 @@ mysqli_close($conn);
     </div>
 </div>
 <!-- Appointment Information Column End -->
+
 
 
      <!-- Footer Start -->
@@ -312,3 +330,9 @@ mysqli_close($conn);
 </body>
 
 </html>
+
+<style>
+    .border-black {
+        border: 1px solid #000000; /* Black border */
+    }
+</style>

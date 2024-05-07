@@ -116,9 +116,27 @@ if (isset($_POST['submit'])) {
                     <small class="fa fa-phone-alt text-primary me-2"></small>
                     <small>+085-654219</small>
                 </div>
+                
                 <div class="h-100 d-inline-flex align-items-center">
-                    <a class=" bg-lightblue text-primary me-1" href="appointment.php"><i class="fas fa-user-plus me-1"></i></i>Login/Register
-            </div>
+                <?php
+                 if(isset($_SESSION['userid'])) {
+                    echo '<span class="text-primary me-1">Welcome Back!</span>';
+                    } else {
+                    echo '<a class=" bg-lightblue text-primary me-1" href="login.php"><i class="fas fa-user me-1"></i>Login</a>';
+                     }
+                ?>
+                </div>
+
+                <div class="h-100 d-inline-flex align-items-center">
+                <?php
+                if(isset($_SESSION['userid'])) {
+                 echo '<a class=" bg-lightblue text-primary me-1" href="login.php"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>';
+                 } else {
+                echo '<a class=" bg-lightblue text-primary me-1" href="login.php"><i class="fas fa-user me-1"></i>Login</a>';
+                echo '<a class=" bg-lightblue text-primary me-1" href="signup.php"><i class="fas fa-user-plus me-1"></i>Register</a>';
+                 }
+                ?>
+                </div>
         </div>
     </div>
     <!-- Topbar End -->
@@ -189,7 +207,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                     <p class="d-inline-block border rounded-pill py-1 px-4">Appointment</p>
                     <h1 class="mb-4">Make An Appointment Of The Care Services</h1>
-                    <p class="mb-4">Free to Register as a member to book services to get more benefits. </p>
+                    <p class="mb-4">Schedule your loved one's elderly care services appointment today for compassionate support and assistance.</p>
                     <div class="bg-light rounded d-flex align-items-center p-5 mb-4">
                         <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-white" style="width: 55px; height: 55px;">
                             <i class="fa fa-phone-alt text-primary"></i>

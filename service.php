@@ -252,7 +252,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                     <p class="d-inline-block border rounded-pill py-1 px-4">Appointment</p>
                     <h1 class="mb-4">Make An Appointment Of The Care Services</h1>
-                    <p class="mb-4">Free to Register as a member to book services to get more benefits. </p>
+                    <p class="mb-4">Schedule your loved one's elderly care services appointment today for compassionate support and assistance. </p>
                     <div class="bg-light rounded d-flex align-items-center p-5 mb-4">
                         <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-white" style="width: 55px; height: 55px;">
                             <i class="fa fa-phone-alt text-primary"></i>
