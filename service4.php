@@ -1,41 +1,3 @@
-<?php
-
-$conn = mysqli_connect('localhost', 'root', '', 'appointment') or die('connection failed');
-
-// Check connection
-if ($conn->connect_errno) {
-    echo "Failed to connect to MySQL: " . $conn->connect_error;
-    exit();
-}
-
-if (isset($_POST['submit'])) {
-
-    $mobile = $_POST['mobile'];
-    $services = $_POST['services'];
-    $date = $_POST['date'];
-    $time = $_POST['time'];
-    $special = $_POST['special'];
-
-    // Check if the selected date and time already have an appointment for the same service
-    $check_query = "SELECT * FROM fyp_coding WHERE date = '$date' AND time = '$time' AND services = '$services'";
-    $result = mysqli_query($conn, $check_query);
-    
-    // If an appointment exists for the same service, display an error message
-    if (mysqli_num_rows($result) > 0) {
-        echo "<script type='text/javascript'>alert('Appointment at selected date and time already exists. Please choose a different time.')</script>";
-    } else {
-        // If no appointment exists for the same service at the selected date and time, insert the new appointment
-        $insert = mysqli_query($conn, "INSERT INTO fyp_coding(mobile, services, date, time, special) VALUES ('$mobile','$services','$date','$time','$special')");
-        if ($insert) {
-            echo "<script type='text/javascript'>alert('Appointment Made Successfully')</script>";
-        } else {
-            echo "<script type='text/javascript'>alert('Appointment Failed')</script>";
-        }
-    }
-}
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -101,7 +63,6 @@ if (isset($_POST['submit'])) {
                     <small class="fa fa-phone-alt text-primary me-2"></small>
                     <small>+085-654219</small>
                 </div>
-                
                 <div class="h-100 d-inline-flex align-items-center">
                     <?php
                     session_start(); // Start the session
@@ -123,7 +84,7 @@ if (isset($_POST['submit'])) {
                      }
                     ?>
                     </div>
-            </div>
+        </div>
     </div>
     <!-- Topbar End -->
 
@@ -164,8 +125,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 </div>
             </div>
-                <a href="#" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block" onclick="scrollToAppointment()">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
-
+            <a href="appointment.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->
@@ -188,155 +148,88 @@ if (isset($_POST['submit'])) {
     <!-- Page Header End -->
 
 
-    <!-- Service Start -->
+    <!-- About Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                <p class="d-inline-block border rounded-pill py-1 px-4">Services</p>
-                <h1>Care Services</h1>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-heartbeat text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">HomeCare</h4>
-                        <p class="mb-4">Home Care is additional support provided by professional caregivers to seniors or individuals who require assistance in their everyday lives.</p>
-                        <a class="btn" href="service1.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-heartbeat text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Home Nursing</h4>
-                        <p class="mb-4">Home nursing care is home-based care provided to patients who require professional support for their acute or chronic conditions. Receiving nursing care at home enables you to focus on recovery and rehabilitation in a comfortable and familiar space.</p>
-                        <a class="btn" href="service2.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-heartbeat text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Home therapy</h4>
-                        <p class="mb-4">There are three kinds of home therapy such as Home Physiotherapy, Home Occupational Therapy and Home Speech Therapy.</p>
-                        <a class="btn" href="service3.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-wheelchair text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Elderly Care</h4>
-                        <p class="mb-4">Provide such as personal Care,Nursing Care, and Home therapy</p>
-                        <a class="btn" href="service4.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-wheelchair text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Physiotherapy</h4>
-                        <p class="mb-4">Why Many Skip Physiotherapy Sessions?</p>
-                        <a class="btn" href="service5.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-wheelchair text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Respite Care</h4>
-                        <p class="mb-4">Respite care provides short-term relief for primary caregivers, giving them time to rest, travel, or spend time with other family and friends.</p>
-                        <a class="btn" href="service6.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Service End -->
-
-    <!-- Appointment Start -->
-    <div id="appointment-section" class="container-xxl py-5">
-        <div class="container">
             <div class="row g-5">
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <p class="d-inline-block border rounded-pill py-1 px-4">Appointment</p>
-                    <h1 class="mb-4">Make An Appointment Of The Care Services</h1>
-                    <p class="mb-4">Schedule your loved one's elderly care services appointment today for compassionate support and assistance. </p>
-                    <div class="bg-light rounded d-flex align-items-center p-5 mb-4">
-                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-white" style="width: 55px; height: 55px;">
-                            <i class="fa fa-phone-alt text-primary"></i>
-                        </div>
-                        <div class="ms-4">
-                            <p class="mb-2">Call Us Now</p>
-                            <h5 class="mb-0">+085654219</h5>
-                        </div>
-                    </div>
-                    <div class="bg-light rounded d-flex align-items-center p-5">
-                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-white" style="width: 55px; height: 55px;">
-                            <i class="fa fa-envelope-open text-primary"></i>
-                        </div>
-                        <div class="ms-4">
-                            <p class="mb-2">Mail Us Now</p>
-                            <h5 class="mb-0">harmonycare@hotmail.com</h5>
-                        </div>
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="d-flex flex-column">
+                        <img class="img-fluid rounded w-75 align-self-end" src="img/elderlycare1.jpg" alt="">
+                        <img class="img-fluid rounded w-50 bg-white pt-3 pe-3" src="img/elderlycare2.jpg" alt="" style="margin-top: -25%;">
                     </div>
                 </div>
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="bg-light rounded h-100 d-flex align-items-center p-5">
-                        <form method ="POST">
-                            <div class="row g-3">
-                                <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control border-0" placeholder="Your Mobile" name = "mobile" style="height: 55px;"required>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <select name ="services" class="form-select border-0" style="height: 55px;"required>
-                                        <option selected>Choose Care Services</option>
-                                        <option value="Home Care">Home Care</option>
-                                        <option value="Home Nursing">Home Nursing </option>
-                                        <option value="Home therapy">Home therapy</option>
-                                        <option value="Elderly Care">Elderly Care</option>
-                                        <option value="Physiotherapy">Physiotherapy</option>
-                                        <option value="Respite Care">Respite Care</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="date" id="date" data-target-input="nearest">
-                                        <input type="text"
-                                            class="form-control border-0 datetimepicker-input"
-                                            placeholder="Choose Date" name = "date" data-target="#date" data-toggle="datetimepicker" style="height: 55px;" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="time" id="time" data-target-input="nearest">
-                                        <input type="text"
-                                            class="form-control border-0 datetimepicker-input"
-                                            placeholder="Choose Time" name = "time" data-target="#time" data-toggle="datetimepicker" style="height: 55px;" required>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <textarea class="form-control border-0" rows="5" placeholder="Special Request" name = "special" required></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit" name = "submit" >Book Appointment</button>
-                                </div>
-                            </div>
-                        </form>
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                    <p class="d-inline-block border rounded-pill py-1 px-4">Services</p>
+                    <h1 class="mb-4">Why we need elder care services</h1>
+                    <p>Insomnia and poor quality sleep are common among the elderly in Malaysia. This may be caused by various health conditions such as heart rhythm, sleep apnea or depression. As a result, many seniors tend to wake up frequently through the night and caregivers end up having to be on alert 24/7 to attend to the needs of their loved one round-the-clock.</p>
+                    <p>Seniors also tend to have multiple chronic conditions and family caregivers may not be well-equipped with the skills and knowledge to provide the best care, which further adds to the stress of both the caregiver and the elderly.</p>
+                    <p>This compromises the quality of care the senior receives and can be exhausting for the family caregiver, who often take on many roles, as a personal care assistant, nurse, therapist, treasurer and family member all at once, 24/7.</p>
+                    <h1 class="mb-4">What is elderly care?</h1>
+                    <p><i class="far fa-check-circle text-primary me-3"></i>Personal Care</p>
+                    <p>Assist with the activities of daily living (ADLs) such as eating, bathing, getting dressed, toileting, transferring, and continence.</p>
+                    <p><i class="far fa-check-circle text-primary me-3"></i>Nursing Care</p>
+                    <p>Monitor and administer nursing procedures from tube feed and suctioning to injections and wound care.</p>
+                    <p><i class="far fa-check-circle text-primary me-3"></i>Respite Care</p>
+                    <p>Take a break to rest and recharge while our Care Pros take on the caregiving duties.</p>
+
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+
+    <!-- Feature Start -->
+    <div class="container-fluid bg-primary overflow-hidden my-5 px-lg-0">
+        <div class="container feature px-lg-0">
+            <div class="row g-0 mx-lg-0">
+                <div class="col-lg-6 feature-text py-5 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="p-lg-5 ps-lg-0">
+                        <h1 class="text-white mb-4">How we can better care for our elderly loved ones</h1>
+                        <p class="text-white mb-4 pb-2">One tip in caring for seniors is to remember that providing care goes beyond the physical, practical aspect. Keeping seniors meaningfully engaged is also important for their mental and cognitive well-being and keeps dementia at bay. While this may sound like additional work and effort, it can actually enhance your caregiving experience, help you build a deeper and closer relationship with your loved one, and keep you going in the long-run.</p>
+                        <p class="text-white mb-4 pb-2">Even so, caregiving can still be a physically and emotionally demanding journey. In trying times, do not hesitate to reach out for help. From professional caregivers to support groups, there are many forms of support out there for caregivers in Malaysia. You are not alone.</p>
+                        <p class="text-white mb-4 pb-2">However, the results of therapy are often only visible after many sessions.</p>
+                        <p class="text-white mb-4 pb-2">Joining a caregiver support group lets you connect with fellow family caregivers and support one another while sharing practical tips on taking care of a senior loved one. Having a professional with experience in caring for the elderly can also ensure that your senior loved ones gets the care they deserve and help to guide you along your caregiving journey.</p>
+                      </div>
+                </div>
+                <div class="col-lg-6 pe-lg-0 wow fadeIn" data-wow-delay="0.5s" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="position-absolute img-fluid w-100 h-100" src="img/elderlycare3.jpg" style="object-fit: cover;" alt="">
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
-    <!-- Appointment End -->
+    <!-- Feature End -->
 
-    <!-- Footer Start -->
+
+    <!-- Team Start -->
+    <div class="container-xxl py-5">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-6 pe-lg-0 wow fadeIn" data-wow-delay="0.5s" style="min-height: 400px;">
+                  <div class="position-relative h-100">
+                      <img class="position-absolute img-fluid w-100 h-100" src="img/elderlycare4.jpg" style="object-fit: cover;" alt="Homecare Image">
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                      <h1>Get the Elderly Care Now !!!</h1>
+                      <p><i class="far fa-check-circle text-primary me-3"></i>Promoting Health and Well-being</p>
+                      <p><i class="far fa-check-circle text-primary me-3"></i>Supporting Family Caregiver</p>
+                      <p><i class="far fa-check-circle text-primary me-3"></i>Improving Quality of Life</p>
+                      <p><i><strong>"Elderly care services offer peace of mind for family members, knowing that their loved ones are receiving round-the-clock supervision, companionship, and assistance with daily activities."</strong></i></p>
+                      <a class="btn" href="appointment.php"><i class="fa fa-plus text-primary me-3"></i>Get Elderly Care Now</a>
+                    </div>
+              </div>
+          </div>
+      </div>
+    </div>  
+    <!-- Team End -->
+        
+
+         <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
@@ -396,15 +289,8 @@ if (isset($_POST['submit'])) {
     </div>
     <!-- Footer End -->
 
-
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
-    <script>
-        function scrollToAppointment() {
-            var appointmentSection = document.getElementById('appointment-section');
-            appointmentSection.scrollIntoView({ behavior: 'smooth' });
-        }
-    </script>
 
 
     <!-- JavaScript Libraries -->
@@ -421,6 +307,6 @@ if (isset($_POST['submit'])) {
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-</body>
+</body> 
 
 </html>

@@ -1,56 +1,3 @@
-<?php
-
-$conn = mysqli_connect('localhost', 'root', '', 'harmonycare') or die('connection failed');
-
-// Check connection
-if ($conn->connect_errno) {                                                       
-    echo "Failed to connect to MySQL: " . $conn->connect_error;
-    exit();
-}
-
-session_start(); // Start the session
-
-if (isset($_POST['submit'])) {
-
-    $mobile = $_POST['mobile'];
-    $services = $_POST['services'];
-    $date = $_POST['date'];
-    $time = $_POST['time'];
-    $special = $_POST['special'];
-    
-    // Assuming you have stored the userid in a session variable named 'userid'
-    // Replace 'userid' with the actual session variable name
-    if(isset($_SESSION['userid']) && !empty($_SESSION['userid'])) {
-        $userid = $_SESSION['userid'];
-    } else {
-        // Handle the case where the userid is not set in the session
-        // You might redirect the user to the login page or display an error message
-        echo "<script type='text/javascript'>alert('User not logged in. Please login first.')</script>";
-        exit();
-    }
-
-    // Check if the selected date and time already have an appointment for the same service
-    $check_query = "SELECT * FROM tblappointment WHERE date = '$date' AND time = '$time' AND services = '$services'";
-    $result = mysqli_query($conn, $check_query);
-    
-    // If an appointment exists for the same service, display an error message
-    if (mysqli_num_rows($result) > 0) {
-        echo "<script type='text/javascript'>alert('Appointment at selected date and time already exists. Please choose a different time.')</script>";
-    } else {
-        // If no appointment exists for the same service at the selected date and time, insert the new appointment
-        $insert = mysqli_query($conn, "INSERT INTO tblappointment(userid, mobile, services, date, time, special) VALUES ('$userid', '$mobile','$services','$date','$time','$special')");
-        if ($insert) {
-            echo "<script type='text/javascript'>alert('Appointment Made Successfully')</script>";
-        } else {
-            echo "<script type='text/javascript'>alert('Appointment Failed')</script>";
-        }
-    }
-}
-?>
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -116,33 +63,34 @@ if (isset($_POST['submit'])) {
                     <small class="fa fa-phone-alt text-primary me-2"></small>
                     <small>+085-654219</small>
                 </div>
-                
                 <div class="h-100 d-inline-flex align-items-center">
-                <?php
-                 if(isset($_SESSION['userid'])) {
-                    echo '<span class="text-primary me-1">Welcome Back!</span>';
-                    } else {
-                     }
-                ?>
-                </div>
+                    <?php
+                    session_start(); // Start the session
 
-                <div class="h-100 d-inline-flex align-items-center">
-                <?php
-                if(isset($_SESSION['userid'])) {
-                 echo '<a class=" bg-lightblue text-primary me-1" href="login.php"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>';
-                 } else {
-                echo '<a class=" bg-lightblue text-primary me-1" href="login.php"><i class="fas fa-user me-1"></i>Login</a>';
-                echo '<a class=" bg-lightblue text-primary me-1" href="signup.php"><i class="fas fa-user-plus me-1"></i>Register</a>';
-                 }
-                ?>
-                </div>
+                     if(isset($_SESSION['userid'])) {
+                        echo '<span class="text-primary me-1">Welcome Back!</span>';
+                        } else {
+                         }
+                    ?>
+                    </div>
+    
+                    <div class="h-100 d-inline-flex align-items-center">
+                    <?php
+                    if(isset($_SESSION['userid'])) {
+                     echo '<a class=" bg-lightblue text-primary me-1" href="login.php"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>';
+                     } else {
+                    echo '<a class=" bg-lightblue text-primary me-1" href="login.php"><i class="fas fa-user me-1"></i>Login</a>';
+                    echo '<a class=" bg-lightblue text-primary me-1" href="signup.php"><i class="fas fa-user-plus me-1"></i>Register</a>';
+                     }
+                    ?>
+                    </div>
         </div>
     </div>
     <!-- Topbar End -->
 
 
-    <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0 wow fadeIn" data-wow-delay="0.1s">
+       <!-- Navbar Start -->
+       <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0 wow fadeIn" data-wow-delay="0.1s">
         <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
             <h1 class="m-0 text-primary"><i class="far fa-hospital me-3"></i>HarmonyCare</h1>
         </a>
@@ -157,7 +105,7 @@ if (isset($_POST['submit'])) {
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Health</a>
                     <div class="dropdown-menu rounded-0 rounded-bottom m-0">
-                        <a href="feature.php" class="dropdown-item">Chronic Conditions</a>
+                        <a href="chronic.php" class="dropdown-item">Chronic Conditions</a>
                         <a href="symptoms.php" class="dropdown-item">Symptoms</a>
                         <a href="procedures.php" class="dropdown-item">Procedures & Treatments</a>
                     </div>
@@ -169,7 +117,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 </div>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">More</a> 
+                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">More</a> 
                     <div class="dropdown-menu rounded-0 rounded-bottom m-0">
                         <a href="testimonial.php" class="dropdown-item">Testimonial</a>
                         <a href="team.php" class="dropdown-item">Our Caregiver</a>
@@ -183,15 +131,16 @@ if (isset($_POST['submit'])) {
     <!-- Navbar End -->
 
 
+
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
-            <h1 class="display-3 text-white mb-3 animated slideInDown">Appointment</h1>
+            <h1 class="display-3 text-white mb-3 animated slideInDown">Testimonial</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb text-uppercase mb-0">
                     <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
                     <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
-                    <li class="breadcrumb-item text-primary active" aria-current="page">Appointment</li>
+                    <li class="breadcrumb-item text-primary active" aria-current="page">Testimonial</li>
                 </ol>
             </nav>
         </div>
@@ -199,83 +148,46 @@ if (isset($_POST['submit'])) {
     <!-- Page Header End -->
 
 
-    <!-- Appointment Start -->
-    <div id="appointment-section" class="container-xxl py-5">
+    <!-- Testimonial Start -->
+    <div class="container-xxl py-5">
         <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <p class="d-inline-block border rounded-pill py-1 px-4">Appointment</p>
-                    <h1 class="mb-4">Make An Appointment Of The Care Services</h1>
-                    <p class="mb-4">Schedule your loved one's elderly care services appointment today for compassionate support and assistance.</p>
-                    <div class="bg-light rounded d-flex align-items-center p-5 mb-4">
-                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-white" style="width: 55px; height: 55px;">
-                            <i class="fa fa-phone-alt text-primary"></i>
-                        </div>
-                        <div class="ms-4">
-                            <p class="mb-2">Call Us Now</p>
-                            <h5 class="mb-0">+085654219</h5>
-                        </div>
-                    </div>
-                    <div class="bg-light rounded d-flex align-items-center p-5">
-                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-white" style="width: 55px; height: 55px;">
-                            <i class="fa fa-envelope-open text-primary"></i>
-                        </div>
-                        <div class="ms-4">
-                            <p class="mb-2">Mail Us Now</p>
-                            <h5 class="mb-0">harmonycare@hotmail.com</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="bg-light rounded h-100 d-flex align-items-center p-5">
-                        <form method ="POST">
-                            <div class="row g-3">
-                                <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control border-0" placeholder="Your Mobile" name = "mobile" style="height: 55px;"required>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <select name ="services" class="form-select border-0" style="height: 55px;"required>
-                                        <option selected>Choose Care Services</option>
-                                        <option value="Home Care">Home Care</option>
-                                        <option value="Home Nursing">Home Nursing </option>
-                                        <option value="Home therapy">Home therapy</option>
-                                        <option value="Elderly Care">Elderly Care</option>
-                                        <option value="Physiotherapy">Physiotherapy</option>
-                                        <option value="Respite Care">Respite Care</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="date" id="date" data-target-input="nearest">
-                                        <input type="text"
-                                            class="form-control border-0 datetimepicker-input"
-                                            placeholder="Choose Date" name = "date" data-target="#date" data-toggle="datetimepicker" style="height: 55px;" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="time" id="time" data-target-input="nearest">
-                                        <input type="text"
-                                            class="form-control border-0 datetimepicker-input"
-                                            placeholder="Choose Time" name = "time" data-target="#time" data-toggle="datetimepicker" style="height: 55px;" required>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <textarea class="form-control border-0" rows="5" placeholder="Special Request" name = "special" required></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit" name = "submit" >Book Appointment</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                <p class="d-inline-block border rounded-pill py-1 px-4">Testimonial</p>
+                <h1>What Say Our Customers!</h1>
             </div>
-            
+            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+                <div class="testimonial-item text-center">
+                    <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/testimonial-1.jpg" style="width: 100px; height: 100px;">
+                    <div class="testimonial-text rounded text-center p-4">
+                        <p>"I am extremely satisfied with the care my mother received from HarmonyCare. The caregivers were compassionate, attentive, and respectful of her needs. The booking system was easy to use, and I appreciated the regular updates on her well-being. It gave me peace of mind knowing that she was in good hands. Thank you, HarmonyCare, for your excellent service!".</p>
+                        <h5 class="mb-1">Mohd Ali bin Ahmad</h5>
+                        <span class="fst-italic">Care Services-HomeCare</span>
+                    </div>
+                </div>
+                <div class="testimonial-item text-center">
+                    <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/testimonial-2.jpg" style="width: 100px; height: 100px;">
+                    <div class="testimonial-text rounded text-center p-4">
+                        <p>"I want to express my gratitude to HarmonyCare for the exceptional care they provided to my grandparents. The caregivers were not only skilled and professional but also showed genuine compassion and kindness towards my grandparents. The booking system was straightforward to use, and we appreciated the flexibility it offered in scheduling appointments. HarmonyCare truly made a positive difference in our family's life during a challenging time. Thank you for your outstanding service!"</p>
+                        <h5 class="mb-1">Wong Chee Hin</h5>
+                        <span class="fst-italic">Care Services-Physiotherapy</span>
+                    </div>
+                </div>
+                <div class="testimonial-item text-center">
+                    <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/testimonial-3.jpg" style="width: 100px; height: 100px;">
+                    <div class="testimonial-text rounded text-center p-4">
+                        <p>"I couldn't be happier with the support and assistance HarmonyCare provided for my elderly aunt. From the initial consultation to the ongoing care, the entire process was seamless and efficient. The caregivers were not only experienced and knowledgeable but also took the time to build a personal connection with my aunt, making her feel comfortable and valued. </p>
+                        <h5 class="mb-1">Anding Anak Munan</h5>
+                        <span class="fst-italic">Care Services-Home Nursing</span>
+                    </div>
+                </div>
+                
+            </div>
         </div>
     </div>
-    <!-- Appointment End -->
+    <!-- Testimonial End -->
         
 
-           <!-- Footer Start -->
+    <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
@@ -334,7 +246,7 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
     <!-- Footer End -->
-    
+
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
 

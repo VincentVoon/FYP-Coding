@@ -150,12 +150,12 @@ if (isset($_POST['submit'])) {
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="index.php" class="nav-item nav-link active">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="about.php" class="nav-item nav-link">About</a>
                 <a href="service.php" class="nav-item nav-link">Service</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Health</a>
                     <div class="dropdown-menu rounded-0 rounded-bottom m-0">
-                        <a href="chronic.html" class="dropdown-item">Chronic Conditions</a>
+                        <a href="feature.php" class="dropdown-item">Chronic Conditions</a>
                         <a href="symptoms.html" class="dropdown-item">Symptoms</a>
                         <a href="procedures.html" class="dropdown-item">Procedures & Treatments</a>
                     </div>
@@ -169,8 +169,8 @@ if (isset($_POST['submit'])) {
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">More</a> 
                     <div class="dropdown-menu rounded-0 rounded-bottom m-0">
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="team.html" class="dropdown-item">Our Caregiver</a>
+                        <a href="testimonial.php" class="dropdown-item">Testimonial</a>
+                        <a href="team.php" class="dropdown-item">Our Caregiver</a>
 
                 </div>
                 </div>
@@ -273,7 +273,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <h4 class="mb-3">HomeCare</h4>
                         <p class="mb-4">Home Care is additional support provided by professional caregivers to seniors or individuals who require assistance in their everyday lives.</p>
-                        <a class="btn" href="service1.html"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
+                        <a class="btn" href="service1.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
@@ -283,7 +283,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <h4 class="mb-3">Home Nursing</h4>
                         <p class="mb-4">Home nursing care is home-based care provided to patients who require professional support for their acute or chronic conditions. Receiving nursing care at home enables you to focus on recovery and rehabilitation in a comfortable and familiar space.</p>
-                        <a class="btn" href="service2.html"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
+                        <a class="btn" href="service2.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
@@ -293,7 +293,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <h4 class="mb-3">Home therapy</h4>
                         <p class="mb-4">There are three kinds of home therapy such as Home Physiotherapy, Home Occupational Therapy and Home Speech Therapy.</p>
-                        <a class="btn" href="service3.html"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
+                        <a class="btn" href="service3.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -303,7 +303,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <h4 class="mb-3">Elderly Care</h4>
                         <p class="mb-4">Provide such as personal Care,Nursing Care, and Home therapy</p>
-                        <a class="btn" href="service4.html"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
+                        <a class="btn" href="service4.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
@@ -313,7 +313,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <h4 class="mb-3">Physiotherapy</h4>
                         <p class="mb-4">Why Many Skip Physiotherapy Sessions?</p>
-                        <a class="btn" href="service5.html"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
+                        <a class="btn" href="service5.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
@@ -323,7 +323,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <h4 class="mb-3">Respite Care</h4>
                         <p class="mb-4">Respite care provides short-term relief for primary caregivers, giving them time to rest, travel, or spend time with other family and friends.</p>
-                        <a class="btn" href="service6.html"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
+                        <a class="btn" href="service6.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
                     </div>
                 </div>
             </div>
@@ -376,7 +376,7 @@ if (isset($_POST['submit'])) {
                                     </div>
                                 </div>
                             </div>
-                            <a class="btn btn-primary rounded-pill py-3 px-5 mt-3" href="feature.html">Read More</a>
+                            <a class="btn btn-primary rounded-pill py-3 px-5 mt-3" href="feature.php">Read More</a>
                         </div>
                     </div>
                 </div>
@@ -402,15 +402,15 @@ if (isset($_POST['submit'])) {
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="team-item position-relative rounded overflow-hidden">
                         <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-1.jpg" alt="">
+                            <img class="img-fluid" src="img/caregiver1.jpg" alt="">
                         </div>
                         <div class="team-text bg-light text-center p-4">
                             <h5>Vivian Tiang Kai Li</h5>
                             <p class="text-primary">Care Pro</p>
                             <div class="team-social text-center">
-                                <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-square" href="https://www.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square" href="https://www.twitter.com"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square" href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
@@ -418,15 +418,15 @@ if (isset($_POST['submit'])) {
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="team-item position-relative rounded overflow-hidden">
                         <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-2.jpg" alt="">
+                            <img class="img-fluid" src="img/caregiver2.jpg" alt="">
                         </div>
                         <div class="team-text bg-light text-center p-4">
                             <h5>Siti Nurfarhana</h5>
                             <p class="text-primary">Care Pro</p>
                             <div class="team-social text-center">
-                                <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-square" href="https://www.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square" href="https://www.twitter.com"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square" href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
@@ -434,15 +434,15 @@ if (isset($_POST['submit'])) {
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="team-item position-relative rounded overflow-hidden">
                         <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-3.jpg" alt="">
+                            <img class="img-fluid" src="img/caregiver3.jpg" alt="">
                         </div>
                         <div class="team-text bg-light text-center p-4">
                             <h5>Nur Ayunie Binti Ahmad</h5>
                             <p class="text-primary">Care Pro</p>
                             <div class="team-social text-center">
-                                <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-square" href="https://www.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square" href="https://www.twitter.com"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square" href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
@@ -450,15 +450,15 @@ if (isset($_POST['submit'])) {
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
                     <div class="team-item position-relative rounded overflow-hidden">
                         <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-4.jpg" alt="">
+                            <img class="img-fluid" src="img/caregiver4.jpg" alt="">
                         </div>
                         <div class="team-text bg-light text-center p-4">
                             <h5>Lim Hock Siang</h5>
                             <p class="text-primary">Care Pro</p>
                             <div class="team-social text-center">
-                                <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-square" href="https://www.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square" href="https://www.twitter.com"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square" href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
@@ -594,27 +594,27 @@ if (isset($_POST['submit'])) {
                     <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+085654219</p>
                     <p class="mb-2"><i class="fa fa-envelope me-3"></i>harmonycare@hotmail.com</p>
                     <div class="d-flex pt-2">
-                        <a class="btn btn-outline-light btn-social rounded-circle" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-outline-light btn-social rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-outline-light btn-social rounded-circle" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-outline-light btn-social rounded-circle" href=""><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-outline-light btn-social rounded-circle" href="https://www.twitter.com"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social rounded-circle" href="https://www.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social rounded-circle" href="https://www.youtube.com"><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-social rounded-circle" href="https://www.linkedin.com"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h5 class="text-light mb-4">Services</h5>
-                    <a class="btn btn-link" href="service1.html">Home Care</a>
-                    <a class="btn btn-link" href="service2.html">Home Nursing</a>
-                    <a class="btn btn-link" href="service5.html">Physiotherapy</a>
-                    <a class="btn btn-link" href="service3.html">Home therapy</a>
-                    <a class="btn btn-link" href="service6.html">Respite Care</a>
+                    <a class="btn btn-link" href="service1.php">Home Care</a>
+                    <a class="btn btn-link" href="service2.php">Home Nursing</a>
+                    <a class="btn btn-link" href="service5.php">Physiotherapy</a>
+                    <a class="btn btn-link" href="service3.php">Home therapy</a>
+                    <a class="btn btn-link" href="service6.php">Respite Care</a>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h5 class="text-light mb-4">Quick Links</h5>
-                    <a class="btn btn-link" href="about.html">About Us</a>
-                    <a class="btn btn-link" href="feature.html">Health</a>
+                    <a class="btn btn-link" href="about.php">About Us</a>
+                    <a class="btn btn-link" href="feature.php">Health</a>
                     <a class="btn btn-link" href="service.php">Our Services</a>
-                    <a class="btn btn-link" href="testimonial.html">Testimonial</a>
-                    <a class="btn btn-link" href="team.html">Meet Our Team</a>
+                    <a class="btn btn-link" href="testimonial.php">Testimonial</a>
+                    <a class="btn btn-link" href="team.php">Meet Our Team</a>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h5 class="text-light mb-4">Newsletter</h5>

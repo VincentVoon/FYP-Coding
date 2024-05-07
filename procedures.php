@@ -1,56 +1,3 @@
-<?php
-
-$conn = mysqli_connect('localhost', 'root', '', 'harmonycare') or die('connection failed');
-
-// Check connection
-if ($conn->connect_errno) {                                                       
-    echo "Failed to connect to MySQL: " . $conn->connect_error;
-    exit();
-}
-
-session_start(); // Start the session
-
-if (isset($_POST['submit'])) {
-
-    $mobile = $_POST['mobile'];
-    $services = $_POST['services'];
-    $date = $_POST['date'];
-    $time = $_POST['time'];
-    $special = $_POST['special'];
-    
-    // Assuming you have stored the userid in a session variable named 'userid'
-    // Replace 'userid' with the actual session variable name
-    if(isset($_SESSION['userid']) && !empty($_SESSION['userid'])) {
-        $userid = $_SESSION['userid'];
-    } else {
-        // Handle the case where the userid is not set in the session
-        // You might redirect the user to the login page or display an error message
-        echo "<script type='text/javascript'>alert('User not logged in. Please login first.')</script>";
-        exit();
-    }
-
-    // Check if the selected date and time already have an appointment for the same service
-    $check_query = "SELECT * FROM tblappointment WHERE date = '$date' AND time = '$time' AND services = '$services'";
-    $result = mysqli_query($conn, $check_query);
-    
-    // If an appointment exists for the same service, display an error message
-    if (mysqli_num_rows($result) > 0) {
-        echo "<script type='text/javascript'>alert('Appointment at selected date and time already exists. Please choose a different time.')</script>";
-    } else {
-        // If no appointment exists for the same service at the selected date and time, insert the new appointment
-        $insert = mysqli_query($conn, "INSERT INTO tblappointment(userid, mobile, services, date, time, special) VALUES ('$userid', '$mobile','$services','$date','$time','$special')");
-        if ($insert) {
-            echo "<script type='text/javascript'>alert('Appointment Made Successfully')</script>";
-        } else {
-            echo "<script type='text/javascript'>alert('Appointment Failed')</script>";
-        }
-    }
-}
-?>
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -116,33 +63,34 @@ if (isset($_POST['submit'])) {
                     <small class="fa fa-phone-alt text-primary me-2"></small>
                     <small>+085-654219</small>
                 </div>
-                
                 <div class="h-100 d-inline-flex align-items-center">
-                <?php
-                 if(isset($_SESSION['userid'])) {
-                    echo '<span class="text-primary me-1">Welcome Back!</span>';
-                    } else {
-                     }
-                ?>
-                </div>
+                    <?php
+                    session_start(); // Start the session
 
-                <div class="h-100 d-inline-flex align-items-center">
-                <?php
-                if(isset($_SESSION['userid'])) {
-                 echo '<a class=" bg-lightblue text-primary me-1" href="login.php"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>';
-                 } else {
-                echo '<a class=" bg-lightblue text-primary me-1" href="login.php"><i class="fas fa-user me-1"></i>Login</a>';
-                echo '<a class=" bg-lightblue text-primary me-1" href="signup.php"><i class="fas fa-user-plus me-1"></i>Register</a>';
-                 }
-                ?>
-                </div>
+                     if(isset($_SESSION['userid'])) {
+                        echo '<span class="text-primary me-1">Welcome Back!</span>';
+                        } else {
+                         }
+                    ?>
+                    </div>
+    
+                    <div class="h-100 d-inline-flex align-items-center">
+                    <?php
+                    if(isset($_SESSION['userid'])) {
+                     echo '<a class=" bg-lightblue text-primary me-1" href="login.php"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>';
+                     } else {
+                    echo '<a class=" bg-lightblue text-primary me-1" href="login.php"><i class="fas fa-user me-1"></i>Login</a>';
+                    echo '<a class=" bg-lightblue text-primary me-1" href="signup.php"><i class="fas fa-user-plus me-1"></i>Register</a>';
+                     }
+                    ?>
+                    </div>
         </div>
     </div>
     <!-- Topbar End -->
 
 
-    <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0 wow fadeIn" data-wow-delay="0.1s">
+     <!-- Navbar Start -->
+     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0 wow fadeIn" data-wow-delay="0.1s">
         <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
             <h1 class="m-0 text-primary"><i class="far fa-hospital me-3"></i>HarmonyCare</h1>
         </a>
@@ -155,7 +103,7 @@ if (isset($_POST['submit'])) {
                 <a href="about.php" class="nav-item nav-link">About</a>
                 <a href="service.php" class="nav-item nav-link">Service</a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Health</a>
+                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Health</a>
                     <div class="dropdown-menu rounded-0 rounded-bottom m-0">
                         <a href="feature.php" class="dropdown-item">Chronic Conditions</a>
                         <a href="symptoms.php" class="dropdown-item">Symptoms</a>
@@ -183,15 +131,16 @@ if (isset($_POST['submit'])) {
     <!-- Navbar End -->
 
 
+
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
-            <h1 class="display-3 text-white mb-3 animated slideInDown">Appointment</h1>
+            <h1 class="display-3 text-white mb-3 animated slideInDown">Health</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb text-uppercase mb-0">
                     <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
                     <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
-                    <li class="breadcrumb-item text-primary active" aria-current="page">Appointment</li>
+                    <li class="breadcrumb-item text-primary active" aria-current="page">Health</li>
                 </ol>
             </nav>
         </div>
@@ -199,83 +148,73 @@ if (isset($_POST['submit'])) {
     <!-- Page Header End -->
 
 
-    <!-- Appointment Start -->
-    <div id="appointment-section" class="container-xxl py-5">
+    <!-- About Start -->
+    <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5">
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <p class="d-inline-block border rounded-pill py-1 px-4">Appointment</p>
-                    <h1 class="mb-4">Make An Appointment Of The Care Services</h1>
-                    <p class="mb-4">Schedule your loved one's elderly care services appointment today for compassionate support and assistance.</p>
-                    <div class="bg-light rounded d-flex align-items-center p-5 mb-4">
-                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-white" style="width: 55px; height: 55px;">
-                            <i class="fa fa-phone-alt text-primary"></i>
-                        </div>
-                        <div class="ms-4">
-                            <p class="mb-2">Call Us Now</p>
-                            <h5 class="mb-0">+085654219</h5>
-                        </div>
-                    </div>
-                    <div class="bg-light rounded d-flex align-items-center p-5">
-                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-white" style="width: 55px; height: 55px;">
-                            <i class="fa fa-envelope-open text-primary"></i>
-                        </div>
-                        <div class="ms-4">
-                            <p class="mb-2">Mail Us Now</p>
-                            <h5 class="mb-0">harmonycare@hotmail.com</h5>
-                        </div>
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="d-flex flex-column">
+                        <img class="img-fluid rounded w-75 align-self-end" src="img/procedures1.jpg" alt="">
+                        <img class="img-fluid rounded w-50 bg-white pt-3 pe-3" src="img/procedures2.jpg" alt="" style="margin-top: -25%;">
                     </div>
                 </div>
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="bg-light rounded h-100 d-flex align-items-center p-5">
-                        <form method ="POST">
-                            <div class="row g-3">
-                                <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control border-0" placeholder="Your Mobile" name = "mobile" style="height: 55px;"required>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <select name ="services" class="form-select border-0" style="height: 55px;"required>
-                                        <option selected>Choose Care Services</option>
-                                        <option value="Home Care">Home Care</option>
-                                        <option value="Home Nursing">Home Nursing </option>
-                                        <option value="Home therapy">Home therapy</option>
-                                        <option value="Elderly Care">Elderly Care</option>
-                                        <option value="Physiotherapy">Physiotherapy</option>
-                                        <option value="Respite Care">Respite Care</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="date" id="date" data-target-input="nearest">
-                                        <input type="text"
-                                            class="form-control border-0 datetimepicker-input"
-                                            placeholder="Choose Date" name = "date" data-target="#date" data-toggle="datetimepicker" style="height: 55px;" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="time" id="time" data-target-input="nearest">
-                                        <input type="text"
-                                            class="form-control border-0 datetimepicker-input"
-                                            placeholder="Choose Time" name = "time" data-target="#time" data-toggle="datetimepicker" style="height: 55px;" required>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <textarea class="form-control border-0" rows="5" placeholder="Special Request" name = "special" required></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit" name = "submit" >Book Appointment</button>
-                                </div>
-                            </div>
-                        </form>
+                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                    <p class="d-inline-block border rounded-pill py-1 px-4">Procedures & Treatments</p>
+                    <h1 class="mb-4">What is palliative care and how is it different from hospice care (end-of-life)?</h1>
+                    <p>Many assume and associate palliative care with hospice or end-of-life care, but while the concepts may be similar, they are not the same. Palliative care is defined simply as specialised medical care for people living with an irreversible, life-limiting condition.</p>
+                    <p><strong>Palliative Care:</strong> Palliative care is specialized medical care that focuses on providing relief from the symptoms, pain, and stress of a serious illness. It is appropriate at any stage of an illness and can be provided alongside curative treatment. The goal of palliative care is to improve the quality of life for both the patient and their family by addressing physical, emotional, social, and spiritual needs.</p>
+                    <p><strong>Hospice Care:</strong> Hospice care is a type of palliative care specifically for patients who are nearing the end of life, typically with a prognosis of six months or less if the illness runs its usual course. The focus of hospice care is on providing comfort and support to patients and their families as they approach the end of life. Hospice care is usually provided in the patient's home, but it can also be offered in hospice facilities or hospitals.</p>                  </div>
+             </div>
+        </div>
+      </div>
+    <!-- About End -->
+
+
+    <!-- Feature Start -->
+    <div class="container-fluid bg-primary overflow-hidden my-5 px-lg-0">
+        <div class="container feature px-lg-0">
+            <div class="row g-0 mx-lg-0">
+                <div class="col-lg-6 feature-text py-5 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="p-lg-5 ps-lg-0">
+                        <h1 class="text-white mb-4">What are the palliative and hospice care services and support groups in Malaysia?</h1>
+                        <p class="text-white mb-4 pb-2">1. Assunta Integrated Social Services (ASSISS): Established in 1961, this social enterprise was started out by Assunta Hospital to provide free clinics to the underprivileged. As they evolved throughout the decades, Assunta Integrated Social Services was set up as a community service initiative.</p>
+                        <p class="text-white mb-4 pb-2">2. Kasih Hospice: Kasih Hospice Care Society is a non-profit organisation that aims to help individuals live a full life, both physically and mentally. Under it is Kasih Place — where training, emotional support and philosophies on empathy and compassion is taught. They host a range of activities such as meditation, healthy cooking and eating, and caregiver and patient support groups.</p>
+                        <p class="text-white mb-4 pb-2">3. Hospis Malaysia: Hospis Malaysia is well known as a charitable organisation in Klang Valley offering palliative care for Malaysians, beyond bringing to light awareness on palliative care and moving the needle for government policies.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 pe-lg-0 wow fadeIn" data-wow-delay="0.5s" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="position-absolute img-fluid w-100 h-100" src="img/procedure3.jpg" style="object-fit: cover;" alt="">
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
-    <!-- Appointment End -->
-        
+    <!-- Feature End -->
 
-           <!-- Footer Start -->
+
+   <!-- About Start -->
+   <div class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                <div class="d-flex flex-column">
+                    <img class="img-fluid rounded w-75 align-self-end" src="img/procedures4.jpg" alt="">
+                    <img class="img-fluid rounded w-50 bg-white pt-3 pe-3" src="img/procedures5.jpg" alt="" style="margin-top: -25%;">
+                </div>
+            </div>
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                <h1 class="mb-4">What is palliative care at home?</h1>
+                <p>Many seniors want to age at home and family caregivers find that getting palliative care at home can sometimes mean that they may need to be there 24/7 physically, mentally, and emotionally to care for their loved one in their day-to-day which can be complex especially when they have commitments of their own or when they may not be around for extended periods of time. Some prefer to get a maid or helper, and others take it on as their responsibility to care for their own parents with the mindset to pay homage by being filial to their loved ones.</p>
+                <p>Getting personalised care at home makes a difference in ensuring seniors are constantly comfortable and are given the right kind of support. At the end of the day, the goal is to improve and provide the best possible quality of life for every individual.</p>
+              </div>
+        </div>
+    </div>
+  </div>
+<!-- About End -->
+
+
+         <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
@@ -334,7 +273,7 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
     <!-- Footer End -->
-    
+
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
 
@@ -353,6 +292,6 @@ if (isset($_POST['submit'])) {
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-</body>
+</body> 
 
 </html>

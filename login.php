@@ -18,6 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 // Check if the role matches
                 if ($user_data['role'] == $role) {
                       $_SESSION['userid']=$user_data['userid'];
+                      $_SESSION['name']=$user_data['name'];
+                      $_SESSION['email']=$user_data['email'];
+
                       $_SESSION['role']=$user_data['role'];
                     // Redirect based on role
                     if ($role == 'Caregiver') {

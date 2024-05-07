@@ -40,6 +40,7 @@ if (mysqli_num_rows($result) > 0) {
         $currentAppointment['date'] = $row['date'];
         $currentAppointment['time'] = $row['time'];
         $currentAppointment['special'] = $row['special'];
+        $currentAppointment['status'] = $row['status'];
         array_push($appointmentList['appointment'], $currentAppointment);
         
         // $appointmentList['appointment']['bookingid'];
@@ -68,7 +69,7 @@ if (mysqli_num_rows($result) > 0) {
     }*/
 } else {
     // No appointments found
-    echo "No appointments found for this user.";
+    // echo "No appointments found for this user.";
 }
 
 // Close database connection
@@ -168,7 +169,7 @@ mysqli_close($conn);
 
      <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0 wow fadeIn" data-wow-delay="0.1s">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <a href="index.php" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
             <h1 class="m-0 text-primary"><i class="far fa-hospital me-3"></i>HarmonyCare</h1>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -177,14 +178,14 @@ mysqli_close($conn);
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="index.php" class="nav-item nav-link">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="about.php" class="nav-item nav-link">About</a>
                 <a href="service.php" class="nav-item nav-link">Service</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Health</a>
                     <div class="dropdown-menu rounded-0 rounded-bottom m-0">
-                        <a href="chronic.html" class="dropdown-item">Chronic Conditions</a>
-                        <a href="symptoms.html" class="dropdown-item">Symptoms</a>
-                        <a href="procedures.html" class="dropdown-item">Procedures & Treatments</a>
+                        <a href="chronic.php" class="dropdown-item">Chronic Conditions</a>
+                        <a href="symptoms.php" class="dropdown-item">Symptoms</a>
+                        <a href="procedures.php" class="dropdown-item">Procedures & Treatments</a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
@@ -196,13 +197,13 @@ mysqli_close($conn);
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">More</a> 
                     <div class="dropdown-menu rounded-0 rounded-bottom m-0">
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="team.html" class="dropdown-item">Our Caregiver</a>
+                        <a href="testimonial.php" class="dropdown-item">Testimonial</a>
+                        <a href="team.php" class="dropdown-item">Our Caregiver</a>
 
                 </div>
                 </div>
             </div>
-            <a href="loginnsignup.html" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="appointment.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->
@@ -227,7 +228,18 @@ mysqli_close($conn);
 <!-- Appointment Information Column Start -->
 <div class="container mt-5">
     <div class="row">
-        <?php foreach ($appointmentList['appointment'] as $appointment): ?>
+        <?php if(count($appointmentList['appointment']) <= 0){ ?>
+            <div class="col-md-6">
+            <div class="card mb-4 border-black"> <!-- Added border-black class -->
+                <div class="card-body">
+                    <h5 class="card-title">No Appointment found</h5>
+                    
+                </div>
+            </div>
+        </div>
+        <?php } 
+        
+        foreach ($appointmentList['appointment'] as $appointment):?>
         <div class="col-md-6">
             <div class="card mb-4 border-black"> <!-- Added border-black class -->
                 <div class="card-body">
@@ -237,6 +249,7 @@ mysqli_close($conn);
                     <p class="card-text">Date: <?php echo $appointment['date']; ?></p>
                     <p class="card-text">Time: <?php echo $appointment['time']; ?></p>
                     <p class="card-text">Special: <?php echo $appointment['special']; ?></p>
+                    <p class="card-text">Status: <?php echo $appointment['status']; ?></p>
                 </div>
             </div>
         </div>
@@ -265,19 +278,19 @@ mysqli_close($conn);
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <h5 class="text-light mb-4">Services</h5>
-                        <a class="btn btn-link" href="">Home Care</a>
-                        <a class="btn btn-link" href="">Home Nursing</a>
-                        <a class="btn btn-link" href="">Physiotherapy</a>
-                        <a class="btn btn-link" href="">Home therapy</a>
-                        <a class="btn btn-link" href="">Respite Care</a>
+                        <a class="btn btn-link" href="service1.php">Home Care</a>
+                        <a class="btn btn-link" href="service2.php">Home Nursing</a>
+                        <a class="btn btn-link" href="service5.php">Physiotherapy</a>
+                        <a class="btn btn-link" href="service3.php">Home therapy</a>
+                        <a class="btn btn-link" href="service6.php">Respite Care</a>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <h5 class="text-light mb-4">Quick Links</h5>
-                        <a class="btn btn-link" href="about.html">About Us</a>
-                        <a class="btn btn-link" href="">Health</a>
-                        <a class="btn btn-link" href="service.html">Our Services</a>
-                        <a class="btn btn-link" href="testimonial.html">Testimonial</a>
-                        <a class="btn btn-link" href="team.html">Meet Our Team</a>
+                        <a class="btn btn-link" href="about.php">About Us</a>
+                        <a class="btn btn-link" href="feature.php">Health</a>
+                        <a class="btn btn-link" href="service.php">Our Services</a>
+                        <a class="btn btn-link" href="testimonial.php">Testimonial</a>
+                        <a class="btn btn-link" href="team.php">Meet Our Team</a>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <h5 class="text-light mb-4">Newsletter</h5>

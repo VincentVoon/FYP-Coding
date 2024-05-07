@@ -1,41 +1,3 @@
-<?php
-
-$conn = mysqli_connect('localhost', 'root', '', 'appointment') or die('connection failed');
-
-// Check connection
-if ($conn->connect_errno) {
-    echo "Failed to connect to MySQL: " . $conn->connect_error;
-    exit();
-}
-
-if (isset($_POST['submit'])) {
-
-    $mobile = $_POST['mobile'];
-    $services = $_POST['services'];
-    $date = $_POST['date'];
-    $time = $_POST['time'];
-    $special = $_POST['special'];
-
-    // Check if the selected date and time already have an appointment for the same service
-    $check_query = "SELECT * FROM fyp_coding WHERE date = '$date' AND time = '$time' AND services = '$services'";
-    $result = mysqli_query($conn, $check_query);
-    
-    // If an appointment exists for the same service, display an error message
-    if (mysqli_num_rows($result) > 0) {
-        echo "<script type='text/javascript'>alert('Appointment at selected date and time already exists. Please choose a different time.')</script>";
-    } else {
-        // If no appointment exists for the same service at the selected date and time, insert the new appointment
-        $insert = mysqli_query($conn, "INSERT INTO fyp_coding(mobile, services, date, time, special) VALUES ('$mobile','$services','$date','$time','$special')");
-        if ($insert) {
-            echo "<script type='text/javascript'>alert('Appointment Made Successfully')</script>";
-        } else {
-            echo "<script type='text/javascript'>alert('Appointment Failed')</script>";
-        }
-    }
-}
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -101,7 +63,6 @@ if (isset($_POST['submit'])) {
                     <small class="fa fa-phone-alt text-primary me-2"></small>
                     <small>+085-654219</small>
                 </div>
-                
                 <div class="h-100 d-inline-flex align-items-center">
                     <?php
                     session_start(); // Start the session
@@ -123,7 +84,7 @@ if (isset($_POST['submit'])) {
                      }
                     ?>
                     </div>
-            </div>
+        </div>
     </div>
     <!-- Topbar End -->
 
@@ -164,8 +125,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 </div>
             </div>
-                <a href="#" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block" onclick="scrollToAppointment()">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
-
+            <a href="appointment.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->
@@ -188,156 +148,95 @@ if (isset($_POST['submit'])) {
     <!-- Page Header End -->
 
 
-    <!-- Service Start -->
+    <!-- About Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                <p class="d-inline-block border rounded-pill py-1 px-4">Services</p>
-                <h1>Care Services</h1>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-heartbeat text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">HomeCare</h4>
-                        <p class="mb-4">Home Care is additional support provided by professional caregivers to seniors or individuals who require assistance in their everyday lives.</p>
-                        <a class="btn" href="service1.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-heartbeat text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Home Nursing</h4>
-                        <p class="mb-4">Home nursing care is home-based care provided to patients who require professional support for their acute or chronic conditions. Receiving nursing care at home enables you to focus on recovery and rehabilitation in a comfortable and familiar space.</p>
-                        <a class="btn" href="service2.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-heartbeat text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Home therapy</h4>
-                        <p class="mb-4">There are three kinds of home therapy such as Home Physiotherapy, Home Occupational Therapy and Home Speech Therapy.</p>
-                        <a class="btn" href="service3.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-wheelchair text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Elderly Care</h4>
-                        <p class="mb-4">Provide such as personal Care,Nursing Care, and Home therapy</p>
-                        <a class="btn" href="service4.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-wheelchair text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Physiotherapy</h4>
-                        <p class="mb-4">Why Many Skip Physiotherapy Sessions?</p>
-                        <a class="btn" href="service5.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-wheelchair text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Respite Care</h4>
-                        <p class="mb-4">Respite care provides short-term relief for primary caregivers, giving them time to rest, travel, or spend time with other family and friends.</p>
-                        <a class="btn" href="service6.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Service End -->
-
-    <!-- Appointment Start -->
-    <div id="appointment-section" class="container-xxl py-5">
-        <div class="container">
             <div class="row g-5">
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <p class="d-inline-block border rounded-pill py-1 px-4">Appointment</p>
-                    <h1 class="mb-4">Make An Appointment Of The Care Services</h1>
-                    <p class="mb-4">Schedule your loved one's elderly care services appointment today for compassionate support and assistance. </p>
-                    <div class="bg-light rounded d-flex align-items-center p-5 mb-4">
-                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-white" style="width: 55px; height: 55px;">
-                            <i class="fa fa-phone-alt text-primary"></i>
-                        </div>
-                        <div class="ms-4">
-                            <p class="mb-2">Call Us Now</p>
-                            <h5 class="mb-0">+085654219</h5>
-                        </div>
-                    </div>
-                    <div class="bg-light rounded d-flex align-items-center p-5">
-                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-white" style="width: 55px; height: 55px;">
-                            <i class="fa fa-envelope-open text-primary"></i>
-                        </div>
-                        <div class="ms-4">
-                            <p class="mb-2">Mail Us Now</p>
-                            <h5 class="mb-0">harmonycare@hotmail.com</h5>
-                        </div>
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="d-flex flex-column">
+                        <img class="img-fluid rounded w-75 align-self-end" src="img/hometherapy1.jpg" alt="">
+                        <img class="img-fluid rounded w-50 bg-white pt-3 pe-3" src="img/hometherapy2.jpg" alt="" style="margin-top: -25%;">
                     </div>
                 </div>
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="bg-light rounded h-100 d-flex align-items-center p-5">
-                        <form method ="POST">
-                            <div class="row g-3">
-                                <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control border-0" placeholder="Your Mobile" name = "mobile" style="height: 55px;"required>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <select name ="services" class="form-select border-0" style="height: 55px;"required>
-                                        <option selected>Choose Care Services</option>
-                                        <option value="Home Care">Home Care</option>
-                                        <option value="Home Nursing">Home Nursing </option>
-                                        <option value="Home therapy">Home therapy</option>
-                                        <option value="Elderly Care">Elderly Care</option>
-                                        <option value="Physiotherapy">Physiotherapy</option>
-                                        <option value="Respite Care">Respite Care</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="date" id="date" data-target-input="nearest">
-                                        <input type="text"
-                                            class="form-control border-0 datetimepicker-input"
-                                            placeholder="Choose Date" name = "date" data-target="#date" data-toggle="datetimepicker" style="height: 55px;" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="time" id="time" data-target-input="nearest">
-                                        <input type="text"
-                                            class="form-control border-0 datetimepicker-input"
-                                            placeholder="Choose Time" name = "time" data-target="#time" data-toggle="datetimepicker" style="height: 55px;" required>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <textarea class="form-control border-0" rows="5" placeholder="Special Request" name = "special" required></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit" name = "submit" >Book Appointment</button>
-                                </div>
-                            </div>
-                        </form>
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                    <p class="d-inline-block border rounded-pill py-1 px-4">Services</p>
+                    <h1 class="mb-4">What is Home therapy?</h1>
+                    <p>Home therapy care service refers to the provision of therapeutic interventions and treatments within the comfort and convenience of a patient's home. This service is typically provided by trained therapists, such as physical therapists, occupational therapists, speech therapists, or other specialized therapists, depending on the needs of the individual.</p>
+                    <h1 class="mb-4">The need for home therapy and rehabilitation</h1>
+                    <p>Rehabilitation therapy is important in helping adults and children regain independence in daily living and social activities.</p>
+                    <p>For individuals recovering from surgery, stroke or a fall, therapy services can promote a fuller and speedier recovery. Children with developmental conditions may also benefit from the recommended strategies an experienced therapist comes up with to support their development at home and in the community.</p>
+                    <p>However, the results of therapy are often only visible after many sessions.</p>
+                    <p>Those who require physiotherapy or occupational therapy may already be facing issues with mobility. Travelling to and fro can be dangerous or troublesome. Caregivers of those who need speech therapy, especially parents, are often tied up with various work and/or family commitments. Having to invest the time, money and effort, including the commute and wait times at the facility, can be off-putting for both the care recipient and caregivers. This can cause many to delay or skip therapy, which may lead to health complications.</p>
+                    <h1 class="mb-4">How can home therapy help with?</h1>
+                    <p><i class="far fa-check-circle text-primary me-3"></i>Home Physiotherapy</p>
+                    <p>Restore physical function and mobility after injury, illness or surgery with exercises.</p>
+                    <p><i class="far fa-check-circle text-primary me-3"></i>Home Occupational Therapy</p>
+                    <p>Learn, recover or maintain independence in your daily life, at work and at home.</p>
+                    <p><i class="far fa-check-circle text-primary me-3"></i>Home Speech Therapy</p>
+                    <p>Recover your speech, voice and swallowing functions in-person or through teleconsultation.</p>
+
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+
+    <!-- Feature Start -->
+    <div class="container-fluid bg-primary overflow-hidden my-5 px-lg-0">
+        <div class="container feature px-lg-0">
+            <div class="row g-0 mx-lg-0">
+                <div class="col-lg-6 feature-text py-5 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="p-lg-5 ps-lg-0">
+                        <h1 class="text-white mb-4">A quicker and fuller recovery with home therapy</h1>
+                        <p class="text-white mb-4 pb-2">Those looking for a more convenient and affordable way to recover can consider home therapy.</p>
+                        <p class="text-white mb-4 pb-2">By bringing therapy services to your doorstep or online, you can save time and effort travelling to and fro hospitals and facilities and skip the queues. Feeling at ease in a familiar setting can therapists and care recipients build better rapport, which can aid in the recovery process, especially for children and seniors. With home therapy, you’ll also get more one-to-one time with your therapist and receive a personalised care plan tailored according to your progress each session.</p>
+                        <p class="text-white mb-4 pb-2">Being in a home environment will be especially helpful for an occupational therapist to better understand the unique lifestyle habits and living environment of the care recipient, allowing them to customise a personalised programme accordingly.</p>
+                        <p class="text-white mb-4 pb-2">Quality care, privacy and a familiar environment are key to an individual’s wellbeing and recovery. Heal better with home therapy.</p>
+                      </div>
+                </div>
+                <div class="col-lg-6 pe-lg-0 wow fadeIn" data-wow-delay="0.5s" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="position-absolute img-fluid w-100 h-100" src="img/hometherapy3.jpg" style="object-fit: cover;" alt="">
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
-    <!-- Appointment End -->
+    <!-- Feature End -->
+
+
+    <!-- Team Start -->
+    <div class="container-xxl py-5">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-6 pe-lg-0 wow fadeIn" data-wow-delay="0.5s" style="min-height: 400px;">
+                  <div class="position-relative h-100">
+                      <img class="position-absolute img-fluid w-100 h-100" src="img/hometherapy4.jpg" style="object-fit: cover;" alt="Homecare Image">
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                      <h1>Get the Home Therapy Now !!!</h1>
+                      <p><i class="far fa-check-circle text-primary me-3"></i>Regain Confidence</p>
+                      <p>Improve independence in daily activities through a customized therapy plan</p>
+                      <p><i class="far fa-check-circle text-primary me-3"></i>Hassle-Free Experience</p>
+                      <p>Have the specialised therapy sessions in the comfort of your home and avoid the hassle of transport and long queues</p>
+                      <p><i class="far fa-check-circle text-primary me-3"></i>Comfort & Safety</p>
+                      <p>Home is where the heart is, and it can be where you get care too. Wherever you are, our specialists will come to you</p>
+                      <p><i><strong>"With home therapy services, you can achieve your rehabilitation goals without the hassle of traveling to a clinic or hospital, saving you time and energy."</strong></i></p>
+                      <a class="btn" href="appointment.php"><i class="fa fa-plus text-primary me-3"></i>Get Home Therapy Now</a>
+                    </div>
+              </div>
+          </div>
+      </div>
+    </div>  
+    <!-- Team End -->
+        
 
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-light footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container-fluid bg-dark text-light footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
@@ -396,15 +295,8 @@ if (isset($_POST['submit'])) {
     </div>
     <!-- Footer End -->
 
-
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
-    <script>
-        function scrollToAppointment() {
-            var appointmentSection = document.getElementById('appointment-section');
-            appointmentSection.scrollIntoView({ behavior: 'smooth' });
-        }
-    </script>
 
 
     <!-- JavaScript Libraries -->
@@ -421,6 +313,6 @@ if (isset($_POST['submit'])) {
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-</body>
+</body> 
 
 </html>

@@ -1,41 +1,3 @@
-<?php
-
-$conn = mysqli_connect('localhost', 'root', '', 'appointment') or die('connection failed');
-
-// Check connection
-if ($conn->connect_errno) {
-    echo "Failed to connect to MySQL: " . $conn->connect_error;
-    exit();
-}
-
-if (isset($_POST['submit'])) {
-
-    $mobile = $_POST['mobile'];
-    $services = $_POST['services'];
-    $date = $_POST['date'];
-    $time = $_POST['time'];
-    $special = $_POST['special'];
-
-    // Check if the selected date and time already have an appointment for the same service
-    $check_query = "SELECT * FROM fyp_coding WHERE date = '$date' AND time = '$time' AND services = '$services'";
-    $result = mysqli_query($conn, $check_query);
-    
-    // If an appointment exists for the same service, display an error message
-    if (mysqli_num_rows($result) > 0) {
-        echo "<script type='text/javascript'>alert('Appointment at selected date and time already exists. Please choose a different time.')</script>";
-    } else {
-        // If no appointment exists for the same service at the selected date and time, insert the new appointment
-        $insert = mysqli_query($conn, "INSERT INTO fyp_coding(mobile, services, date, time, special) VALUES ('$mobile','$services','$date','$time','$special')");
-        if ($insert) {
-            echo "<script type='text/javascript'>alert('Appointment Made Successfully')</script>";
-        } else {
-            echo "<script type='text/javascript'>alert('Appointment Failed')</script>";
-        }
-    }
-}
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -101,7 +63,6 @@ if (isset($_POST['submit'])) {
                     <small class="fa fa-phone-alt text-primary me-2"></small>
                     <small>+085-654219</small>
                 </div>
-                
                 <div class="h-100 d-inline-flex align-items-center">
                     <?php
                     session_start(); // Start the session
@@ -123,7 +84,7 @@ if (isset($_POST['submit'])) {
                      }
                     ?>
                     </div>
-            </div>
+        </div>
     </div>
     <!-- Topbar End -->
 
@@ -144,7 +105,7 @@ if (isset($_POST['submit'])) {
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Health</a>
                     <div class="dropdown-menu rounded-0 rounded-bottom m-0">
-                        <a href="feature.php" class="dropdown-item">Chronic Conditions</a>
+                        <a href="chronic.php" class="dropdown-item">Chronic Conditions</a>
                         <a href="symptoms.php" class="dropdown-item">Symptoms</a>
                         <a href="procedures.php" class="dropdown-item">Procedures & Treatments</a>
                     </div>
@@ -164,8 +125,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 </div>
             </div>
-                <a href="#" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block" onclick="scrollToAppointment()">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
-
+            <a href="appointment.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->
@@ -188,155 +148,95 @@ if (isset($_POST['submit'])) {
     <!-- Page Header End -->
 
 
-    <!-- Service Start -->
+    <!-- About Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                <p class="d-inline-block border rounded-pill py-1 px-4">Services</p>
-                <h1>Care Services</h1>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-heartbeat text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">HomeCare</h4>
-                        <p class="mb-4">Home Care is additional support provided by professional caregivers to seniors or individuals who require assistance in their everyday lives.</p>
-                        <a class="btn" href="service1.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-heartbeat text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Home Nursing</h4>
-                        <p class="mb-4">Home nursing care is home-based care provided to patients who require professional support for their acute or chronic conditions. Receiving nursing care at home enables you to focus on recovery and rehabilitation in a comfortable and familiar space.</p>
-                        <a class="btn" href="service2.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-heartbeat text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Home therapy</h4>
-                        <p class="mb-4">There are three kinds of home therapy such as Home Physiotherapy, Home Occupational Therapy and Home Speech Therapy.</p>
-                        <a class="btn" href="service3.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-wheelchair text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Elderly Care</h4>
-                        <p class="mb-4">Provide such as personal Care,Nursing Care, and Home therapy</p>
-                        <a class="btn" href="service4.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-wheelchair text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Physiotherapy</h4>
-                        <p class="mb-4">Why Many Skip Physiotherapy Sessions?</p>
-                        <a class="btn" href="service5.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-wheelchair text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Respite Care</h4>
-                        <p class="mb-4">Respite care provides short-term relief for primary caregivers, giving them time to rest, travel, or spend time with other family and friends.</p>
-                        <a class="btn" href="service6.php"><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Service End -->
-
-    <!-- Appointment Start -->
-    <div id="appointment-section" class="container-xxl py-5">
-        <div class="container">
             <div class="row g-5">
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <p class="d-inline-block border rounded-pill py-1 px-4">Appointment</p>
-                    <h1 class="mb-4">Make An Appointment Of The Care Services</h1>
-                    <p class="mb-4">Schedule your loved one's elderly care services appointment today for compassionate support and assistance. </p>
-                    <div class="bg-light rounded d-flex align-items-center p-5 mb-4">
-                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-white" style="width: 55px; height: 55px;">
-                            <i class="fa fa-phone-alt text-primary"></i>
-                        </div>
-                        <div class="ms-4">
-                            <p class="mb-2">Call Us Now</p>
-                            <h5 class="mb-0">+085654219</h5>
-                        </div>
-                    </div>
-                    <div class="bg-light rounded d-flex align-items-center p-5">
-                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-white" style="width: 55px; height: 55px;">
-                            <i class="fa fa-envelope-open text-primary"></i>
-                        </div>
-                        <div class="ms-4">
-                            <p class="mb-2">Mail Us Now</p>
-                            <h5 class="mb-0">harmonycare@hotmail.com</h5>
-                        </div>
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="d-flex flex-column">
+                        <img class="img-fluid rounded w-75 align-self-end" src="img/respitecare1.jpg" alt="">
+                        <img class="img-fluid rounded w-50 bg-white pt-3 pe-3" src="img/respitecare2.jpg" alt="" style="margin-top: -25%;">
                     </div>
                 </div>
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="bg-light rounded h-100 d-flex align-items-center p-5">
-                        <form method ="POST">
-                            <div class="row g-3">
-                                <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control border-0" placeholder="Your Mobile" name = "mobile" style="height: 55px;"required>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <select name ="services" class="form-select border-0" style="height: 55px;"required>
-                                        <option selected>Choose Care Services</option>
-                                        <option value="Home Care">Home Care</option>
-                                        <option value="Home Nursing">Home Nursing </option>
-                                        <option value="Home therapy">Home therapy</option>
-                                        <option value="Elderly Care">Elderly Care</option>
-                                        <option value="Physiotherapy">Physiotherapy</option>
-                                        <option value="Respite Care">Respite Care</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="date" id="date" data-target-input="nearest">
-                                        <input type="text"
-                                            class="form-control border-0 datetimepicker-input"
-                                            placeholder="Choose Date" name = "date" data-target="#date" data-toggle="datetimepicker" style="height: 55px;" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="time" id="time" data-target-input="nearest">
-                                        <input type="text"
-                                            class="form-control border-0 datetimepicker-input"
-                                            placeholder="Choose Time" name = "time" data-target="#time" data-toggle="datetimepicker" style="height: 55px;" required>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <textarea class="form-control border-0" rows="5" placeholder="Special Request" name = "special" required></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit" name = "submit" >Book Appointment</button>
-                                </div>
-                            </div>
-                        </form>
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                    <p class="d-inline-block border rounded-pill py-1 px-4">Services</p>
+                    <h1 class="mb-4">What is respite care?</h1>
+                    <p>As a family caregiver, we often put the needs and interests of our loved ones ahead of ourselves, looking after them 24/7. Over time, physical, emotional, and mental exhaustion can lead to caregiver burnout. Besides taking a toll on our health, caregiver burnout also affects the quality of care that our loved one receives, which is why taking regular breaks is important.</p>
+                    <p>While many Malaysians know the benefits of physiotherapy, many of us delay, skip or are tempted to skip these sessions. This may be due to cost or discomfort during and after performing the exercises.</p>
+                    <p>With respite care, you can get short-term care support for your loved ones. This allows you to take a break from caregiving to attend to your own needs, from several days to a few weeks at a time.</p>
+                    <h1 class="mb-4">Services Provided Under Respite Care</h1>
+                    <p><i class="far fa-check-circle text-primary me-3"></i>Personal Care</p>
+                    <p>Assist with the activities of daily living (ADLs) such as eating, bathing, getting dressed, toileting, transferring, and continence.</p>
+                    <p><i class="far fa-check-circle text-primary me-3"></i>Medication Reminders</p>
+                    <p>No more missed doses. Our caregivers can help to remind your loved one to take their pills at the allotted time.</p>
+                    <p><i class="far fa-check-circle text-primary me-3"></i>Staying Active</p>
+                    <p>Keep the mind and body active and alert with physical exercises and stimulating brain activities.</p>
+                    <p><i class="far fa-check-circle text-primary me-3"></i>Nursing Care</p>
+                    <p>Monitor and administer nursing procedures from tube feed and suctioning to injections and wound care.</p>
+                    <p><i class="far fa-check-circle text-primary me-3"></i>Night Care</p>
+                    <p>Care provided through the night to assist with toileting or nursing needs, prevent wandering and reduce fall-risk.</p>
+                    <p><i class="far fa-check-circle text-primary me-3"></i>Companionship</p>
+                    <p>Befriend and engage through conversations, interactive activities and outdoor trips.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+
+    <!-- Feature Start -->
+    <div class="container-fluid bg-primary overflow-hidden my-5 px-lg-0">
+        <div class="container feature px-lg-0">
+            <div class="row g-0 mx-lg-0">
+                <div class="col-lg-6 feature-text py-5 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="p-lg-5 ps-lg-0">
+                        <h1 class="text-white mb-4">Who is respite care for?</h1>
+                        <p class="text-white mb-4 pb-2">All caregivers can benefit from respite care services. If our loved one was recently discharged from a hospital post-surgery, additional care support and expertise can help. When our helper is on home leave, we may not be able to cope with our loved one’s care needs single-handedly. Other times, we may suddenly be caught up in a work or family emergency that requires us to be somewhere else at a short notice. Sometimes, we simply need a break from caregiving and that’s fine too!</p>
+                        <h1 class="text-white mb-4">Types Of Respite Care</h1>
+                        <p class="text-white mb-4 pb-2">Everyone has different reasons for engaging respite care and depending on your unique circumstance, respite care can be personalised to your care needs. Broadly, we can classify respite care into 2 different types:</p>
+                        <p class="text-white mb-4 pb-2">1. Emergency Respite</p>
+                        <p class="text-white mb-4 pb-2">Emergency respite care is suitable for family caregivers who need to engage respite care at short notice, such as when the caregiver falls ill or when a family or work emergency crops up.</p>
+                        <p class="text-white mb-4 pb-2">2. Planned Respite</p>
+                        <p class="text-white mb-4 pb-2">Planned respite care is for caregivers who can foresee and anticipate when they need to engage respite care, such as when the helper is going on home leave or when care is needed post-hospitalisation.</p>
+                      </div>
+                </div>
+                <div class="col-lg-6 pe-lg-0 wow fadeIn" data-wow-delay="0.5s" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="position-absolute img-fluid w-100 h-100" src="img/respitecare3.jpg" style="object-fit: cover;" alt="">
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
-    <!-- Appointment End -->
+    <!-- Feature End -->
 
-    <!-- Footer Start -->
+
+    <!-- Team Start -->
+    <div class="container-xxl py-5">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-6 pe-lg-0 wow fadeIn" data-wow-delay="0.5s" style="min-height: 400px;">
+                  <div class="position-relative h-100">
+                      <img class="position-absolute img-fluid w-100 h-100" src="img/respitecare4.jpg" style="object-fit: cover;" alt="Homecare Image">
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                      <h1>Get the Respite Care Now !!!</h1>
+                      <p><i class="far fa-check-circle text-primary me-3"></i>Preventing Caregiver Burnout</p>
+                      <p><i class="far fa-check-circle text-primary me-3"></i>Maintaining Caregiver Health</p>
+                      <p><i class="far fa-check-circle text-primary me-3"></i>Enhancing Quality of Life for Loved Ones</p>
+                      <p><i><strong>""Ensure the highest level of care for your loved one while taking essential time for yourself with respite care services tailored to meet your family's unique needs."</strong></i></p>
+                      <a class="btn" href="appointment.php"><i class="fa fa-plus text-primary me-3"></i>Get Respite Care Now</a>
+                    </div>
+              </div>
+          </div>
+      </div>
+    </div>  
+    <!-- Team End -->
+        
+
+         <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
@@ -395,16 +295,9 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
     <!-- Footer End -->
-
-
+    
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
-    <script>
-        function scrollToAppointment() {
-            var appointmentSection = document.getElementById('appointment-section');
-            appointmentSection.scrollIntoView({ behavior: 'smooth' });
-        }
-    </script>
 
 
     <!-- JavaScript Libraries -->
@@ -421,6 +314,6 @@ if (isset($_POST['submit'])) {
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-</body>
+</body> 
 
 </html>

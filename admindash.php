@@ -26,23 +26,50 @@
                 echo "Failed to connect to MySQL: " . $conn->connect_error;
                 exit();
             }
+            session_start();
+            
 
             // Fetch appointments from the database
-            $query = "SELECT * FROM tblappointment";
+            $query = "SELECT * FROM tblappointment
+                      INNER JOIN tblregister 
+                      ON tblregister.userid = tblappointment.userid";
             $result = mysqli_query($conn, $query);
 
             if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
+                    $bookingid = $row['bookingid'];
+                    $mobile = $row['mobile'];
+                    $services = $row['services'];
+                    $date = $row['date'];
+                    $time = $row['time'];
+                    $special = $row['special'];
+                    $status = $row['status'];
+                    $name = $row['name'];
+                    $email = $row['email'];
                     ?>
                     <div class="appointment">
-                        <p><strong>Mobile Number:</strong> <span class="mobile-number"><?php echo $row['mobile']; ?></span></p>
-                        <p><strong>Service:</strong> <span class="service"><?php echo $row['services']; ?></span></p>
-                        <p><strong>Date:</strong> <span class="date"><?php echo $row['date']; ?></span></p>
-                        <p><strong>Time:</strong> <span class="time"><?php echo $row['time']; ?></span></p>
-                        <p><strong>Special Request:</strong> <span class="special"><?php echo $row['special']; ?></span></p>
+                        <p><strong>status</strong> <span class="mobile-number"><?php echo $status; ?></span></p>
+                        <p><strong>Mobile Number:</sstrong> <span class="mobile-number"><?php echo $mobile; ?></span></p>
+                        <p><strong>Service:</strong> <span class="service"><?php echo $services; ?></span></p>
+                        <p><strong>Date:</strong> <span class="date"><?php echo $date; ?></span></p>
+                        <p><strong>Time:</strong> <span class="time"><?php echo $time; ?></span></p>
+                        <p><strong>Special Request:</strong> <span class="special"><?php echo $special; ?></span></p>
                         <div class="action-buttons">
-                            <button class="accept-btn">Accept</button>
-                            <button class="reject-btn">Reject</button>
+                            <form id ="approveButton" action="mailnotification.php" method="POST" style="display:inline">
+                                <input type="hidden" name="bookingid" value="<?php echo $bookingid?>">
+                                <input type="hidden" name="status" value="<?php echo "Approved"?>">
+                                <input type="hidden" name="userName" value="<?php echo $name?>">
+                                <input type="hidden" name="userEmail" value="<?php echo $email?>">
+                                <button class="accept-btn" type="submit">Accept</button>
+                            </form>
+                            <form id ="rejectButton" action="mailnotification.php" method="POST" style="display:inline">
+                                <input type="hidden" name="bookingid" value="<?php echo $bookingid?>">
+                                <input type="hidden" name="status" value="<?php echo "Rejected"?>">
+                                <input type="hidden" name="userName" value="<?php echo $name?>">
+                                <input type="hidden" name="userEmail" value="<?php echo $email?>">
+                                <button class="reject-btn">Reject</button>
+                            </form>
+                            
                         </div>
                     </div>
                     <?php
