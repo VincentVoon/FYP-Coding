@@ -52,7 +52,7 @@ function mailNotification($email,$name,$status){
     $mail = new PHPMailer(true);
     try {
         $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host       = 'smtp.gmail.com';                  //Set the SMTP server to send through
+        $mail->Host       = 'smtp.gmail.`com';                  //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
         $mail->Username   = 'gideon7217@gmail.com';         //SMTP username
         $mail->Password   = 'pfhdquckseyxurrg';                         //SMTP password

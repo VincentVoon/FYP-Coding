@@ -21,7 +21,7 @@ if ($conn->connect_errno) {
 // Retrieve appointments for the logged-in user
 $userid = $_SESSION['userid'];
 if($_SESSION['role'] =="Caregiver"){
-    $query = "SELECT * FROM tblappointment";
+    // $query = "SELECT * FROM tblappointment";
 }else{
     $query = "SELECT * FROM tblappointment WHERE userid = $userid";
 }

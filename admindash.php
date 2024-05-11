@@ -32,7 +32,8 @@
             // Fetch appointments from the database
             $query = "SELECT * FROM tblappointment
                       INNER JOIN tblregister 
-                      ON tblregister.userid = tblappointment.userid";
+                      ON tblregister.userid = tblappointment.userid
+                      WHERE status = 'Pending'";
             $result = mysqli_query($conn, $query);
 
             if (mysqli_num_rows($result) > 0) {
@@ -48,7 +49,7 @@
                     $email = $row['email'];
                     ?>
                     <div class="appointment">
-                        <p><strong>status</strong> <span class="mobile-number"><?php echo $status; ?></span></p>
+                        <p><strong>Status:</strong> <span class="mobile-number"><?php echo $status; ?></span></p>
                         <p><strong>Mobile Number:</sstrong> <span class="mobile-number"><?php echo $mobile; ?></span></p>
                         <p><strong>Service:</strong> <span class="service"><?php echo $services; ?></span></p>
                         <p><strong>Date:</strong> <span class="date"><?php echo $date; ?></span></p>
@@ -69,7 +70,6 @@
                                 <input type="hidden" name="userEmail" value="<?php echo $email?>">
                                 <button class="reject-btn">Reject</button>
                             </form>
-                            
                         </div>
                     </div>
                     <?php
@@ -172,27 +172,38 @@
     </style>
 
     <script>
-        // JavaScript code to handle button clicks
-        document.addEventListener("DOMContentLoaded", function () {
-            var acceptButtons = document.querySelectorAll(".accept-btn");
-            var rejectButtons = document.querySelectorAll(".reject-btn");
+       document.addEventListener("DOMContentLoaded", function () {
+    var acceptButtons = document.querySelectorAll(".accept-btn");
+    var rejectButtons = document.querySelectorAll(".reject-btn");
 
-            acceptButtons.forEach(function (button) {
-                button.addEventListener("click", function (event) {
-                    // Perform action when accept button is clicked
-                    // You can implement the logic to update the appointment status in the database
-                    console.log("Appointment accepted");
-                });
-            });
+    acceptButtons.forEach(function (button) {
+        button.addEventListener("click", function (event) {
+            // Perform action when accept button is clicked
+            // You can implement the logic to update the appointment status in the database
+            var form= document.getElementById("approveButton");
+            form.submit();
+            // Remove the parent element (the appointment) from the DOM
+            var appointment = button.closest(".appointment");
+            appointment.parentNode.removeChild(appointment);
 
-            rejectButtons.forEach(function (button) {
-                button.addEventListener("click", function (event) {
-                    // Perform action when reject button is clicked
-                    // You can implement the logic to update the appointment status in the database
-                    console.log("Appointment rejected");
-                });
-            });
+            console.log("Appointment accepted");
         });
+    });
+
+    rejectButtons.forEach(function (button) {
+        button.addEventListener("click", function (event) {
+            // Perform action when reject button is clicked
+            // You can implement the logic to update the appointment status in the database
+            var form= document.getElementById("approveButton");
+            form.submit();
+            // Remove the parent element (the appointment) from the DOM
+            var appointment = button.closest(".appointment");
+            appointment.parentNode.removeChild(appointment);
+
+            console.log("Appointment rejected");
+        });
+    });
+});
     </script>
 </body>
 

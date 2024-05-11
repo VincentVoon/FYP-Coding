@@ -80,6 +80,10 @@ if (isset($_POST['submit'])) {
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+    <!-- Auto Slide -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 </head>
 
 <body>
@@ -182,55 +186,47 @@ if (isset($_POST['submit'])) {
 
 
     <!-- Header Start -->
-    <div class="container-fluid header bg-primary p-0 mb-5">
-        <div class="row g-0 align-items-center flex-column-reverse flex-lg-row">
-            <div class="col-lg-6 p-5 wow fadeIn" data-wow-delay="0.1s">
-                <h1 class="display-4 text-white mb-5">Caring Connections, Convenient Bookings: Your Eldercare, Our Priority!</h1>
-                <div class="row g-4">
-                    <div class="col-sm-4">
-                        <div class="border-start border-light ps-4">
-                            <h2 class="text-white mb-1" data-toggle="counter-up">123</h2>
-                            <p class="text-light mb-0">Expert Caregivers</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="border-start border-light ps-4">
-                            <h2 class="text-white mb-1" data-toggle="counter-up">1234</h2>
-                            <p class="text-light mb-0">Professional</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="border-start border-light ps-4">
-                            <h2 class="text-white mb-1" data-toggle="counter-up">12345</h2>
-                            <p class="text-light mb-0">Total Patients</p>
-                        </div>
+<div class="container-fluid header bg-primary p-0 mb-5">
+    <div class="row g-0 align-items-center flex-column-reverse flex-lg-row">
+        <div class="col-lg-6 p-5 wow fadeIn" data-wow-delay="0.1s">
+            <h1 class="display-4 text-white mb-5">Caring Connections, Convenient Bookings: Your Eldercare, Our Priority!</h1>
+            <div class="row g-4">
+                <div class="col-sm-4">
+                    <div class="border-start border-light ps-4">
+                        <h2 class="text-white mb-1" data-toggle="counter-up">123</h2>
+                        <p class="text-light mb-0">Expert Caregivers</p>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                <div class="owl-carousel header-carousel">
-                    <div class="owl-carousel-item position-relative">
-                        <img class="img-fluid" src="img/carousel-1.jpg" alt="">
-                        <div class="owl-carousel-text">
-                            
-                        </div>
+                <div class="col-sm-4">
+                    <div class="border-start border-light ps-4">
+                        <h2 class="text-white mb-1" data-toggle="counter-up">1234</h2>
+                        <p class="text-light mb-0">Professional</p>
                     </div>
-                    <div class="owl-carousel-item position-relative">
-                        <img class="img-fluid" src="img/carousel-2.jpg" alt="">
-                        <div class="owl-carousel-text">
-                        </div>
-                    </div>
-                    <div class="owl-carousel-item position-relative">
-                        <img class="img-fluid" src="img/carousel-3.jpg" alt="">
-                        <div class="owl-carousel-text">>
-                        </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="border-start border-light ps-4">
+                        <h2 class="text-white mb-1" data-toggle="counter-up">12345</h2>
+                        <p class="text-light mb-0">Total Patients</p>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+            <div class="owl-carousel header-carousel">
+                <div class="owl-carousel-item position-relative">
+                    <img class="img-fluid" src="img/index1.jpg" alt="">
+                </div>
+                <div class="owl-carousel-item position-relative">
+                    <img class="img-fluid" src="img/index2.jpg" alt="">
+                </div>
+                <div class="owl-carousel-item position-relative">
+                    <img class="img-fluid" src="img/index3.jpg" alt="">
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- Header End -->
-
+</div>
+<!-- Header End -->
 
     <!-- About Start -->
     <div class="container-xxl py-5">
@@ -250,7 +246,7 @@ if (isset($_POST['submit'])) {
                     <p><i class="far fa-check-circle text-primary me-3"></i>Quality health care</p>
                     <p><i class="far fa-check-circle text-primary me-3"></i>Only Qualified Caregiver</p>
                     <p><i class="far fa-check-circle text-primary me-3"></i>Professionals Info Medical</p>
-                    <a class="btn btn-primary rounded-pill py-3 px-5 mt-3" href="about.html">Read More</a>
+                    <a class="btn btn-primary rounded-pill py-3 px-5 mt-3" href="about.php">Read More</a>
                 </div>
             </div>
         </div>
@@ -382,7 +378,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="col-lg-6 pe-lg-0 wow fadeIn" data-wow-delay="0.5s" style="min-height: 400px;">
                     <div class="position-relative h-100">
-                        <img class="position-absolute img-fluid w-100 h-100" src="img/feature.jpg" style="object-fit: cover;" alt="">
+                        <img class="position-absolute img-fluid w-100 h-100" src="img/info.jpg" style="object-fit: cover;" alt="">
                     </div>
                 </div>
             </div>
@@ -663,6 +659,23 @@ if (isset($_POST['submit'])) {
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <!-- Include jQuery and Owl Carousel JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    <!-- Initialize Owl Carousel -->
+    <script>
+    $(document).ready(function(){
+        $(".header-carousel").owlCarousel({
+            items: 1,
+            loop: true,
+            autoplay: true,
+            autoplayTimeout: 4000, // Change slide interval (milliseconds)
+            autoplayHoverPause: true
+        });
+    });
+    </script>
 </body>
 
 </html>
