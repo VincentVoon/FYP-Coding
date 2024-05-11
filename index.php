@@ -465,14 +465,14 @@ if (isset($_POST['submit'])) {
     <!-- Team End -->
 
 
-  <!-- Appointment Start -->
-  <div id="appointment-section" class="container-xxl py-5">
+   <!-- Appointment Start -->
+   <div id="appointment-section" class="container-xxl py-5">
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                     <p class="d-inline-block border rounded-pill py-1 px-4">Appointment</p>
                     <h1 class="mb-4">Make An Appointment Of The Care Services</h1>
-                    <p class="mb-4">Schedule your loved one's elderly care services appointment today for compassionate support and assistance. </p>
+                    <p class="mb-4">Schedule your loved one's elderly care services appointment today for compassionate support and assistance.</p>
                     <div class="bg-light rounded d-flex align-items-center p-5 mb-4">
                         <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-white" style="width: 55px; height: 55px;">
                             <i class="fa fa-phone-alt text-primary"></i>
@@ -494,13 +494,13 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="bg-light rounded h-100 d-flex align-items-center p-5">
-                        <form method ="POST">
+                        <form id = "formID" method ="POST">
                             <div class="row g-3">
                                 <div class="col-12 col-sm-6">
                                     <input type="text" class="form-control border-0" placeholder="Your Mobile" name = "mobile" style="height: 55px;"required>
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <select name ="services" class="form-select border-0" style="height: 55px;"required>
+                                    <select id="selectID" name ="services" class="form-select border-0" style="height: 55px;"required>
                                         <option selected>Choose Care Services</option>
                                         <option value="Home Care">Home Care</option>
                                         <option value="Home Nursing">Home Nursing </option>
@@ -675,6 +675,18 @@ if (isset($_POST['submit'])) {
             autoplayHoverPause: true
         });
     });
+    </script>
+
+<script>
+        document.getElementById('formID').addEventListener('submit',function(event){
+            var selectedElement = document.getElementById("selectID");
+            var selectedValue = selectedElement.value;
+            if(selectedValue.trim() == "" || selectedValue == "Choose Care Services"){
+                event.preventDefault();
+                alert("Please select a service");
+                return false;
+            }
+        });
     </script>
 </body>
 
