@@ -206,7 +206,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-sm-4">
                     <div class="border-start border-light ps-4">
                         <h2 class="text-white mb-1" data-toggle="counter-up">12345</h2>
-                        <p class="text-light mb-0">Total Patients</p>
+                        <p class="text-light mb-0">Total Elderly People</p>
                     </div>
                 </div>
             </div>

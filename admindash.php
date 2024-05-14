@@ -68,7 +68,7 @@
                                 <input type="hidden" name="status" value="<?php echo "Rejected"?>">
                                 <input type="hidden" name="userName" value="<?php echo $name?>">
                                 <input type="hidden" name="userEmail" value="<?php echo $email?>">
-                                <button class="reject-btn">Reject</button>
+                                <button class="reject-btn" type= "submit">Reject</button>
                             </form>
                         </div>
                     </div>
@@ -194,7 +194,7 @@
         button.addEventListener("click", function (event) {
             // Perform action when reject button is clicked
             // You can implement the logic to update the appointment status in the database
-            var form= document.getElementById("approveButton");
+            var form= document.getElementById("rejectButton");
             form.submit();
             // Remove the parent element (the appointment) from the DOM
             var appointment = button.closest(".appointment");
