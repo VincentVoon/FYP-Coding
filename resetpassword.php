@@ -2,48 +2,26 @@
 session_start();
 include("db.php");
 
+
+$userid = $_GET['userid'];
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $role = $_POST['role']; // Get the selected role during login
+  $p1 = $_POST['p1'];
+  $p2 = $_POST['p2'];
 
-    if (!empty($email) && !empty($password) && !empty($role) && !is_numeric($email)) {
-        $query = "SELECT * FROM tblregister WHERE email = '$email' LIMIT 1";
-        $result = mysqli_query($con, $query);
+  if($p1 != $p2){
+      echo "<script type='text/javascript'>alert('Password and Confirm Password do not match')</script>";
+      return;
+  }
 
-        if ($result && mysqli_num_rows($result) > 0) {
-            $user_data = mysqli_fetch_assoc($result);
-
-            if ($user_data['password'] == $password) {
-                // Check if the role matches
-                if ($user_data['role'] == $role) {
-                      $_SESSION['userid']=$user_data['userid'];
-                      $_SESSION['name']=$user_data['name'];
-                      $_SESSION['email']=$user_data['email'];
-
-                      $_SESSION['role']=$user_data['role'];
-                    // Redirect based on role
-                    if ($role == 'Caregiver') {
-                    
-                        header("location: admindash.php");
-                        die;
-                    } else if ($role == 'Care Recipient') {
-       
-                        header("location: index.php");
-                        die;
-                    }
-                } else {
-                    echo "<script type='text/javascript'>alert('You cannot login with the selected role')</script>";
-                }
-            } else {
-                echo "<script type='text/javascript'>alert('Wrong Email or Password')</script>";
-            }
-        } else {
-            echo "<script type='text/javascript'>alert('Wrong Email or Password')</script>";
-        }
-    } else {
-        echo "<script type='text/javascript'>alert('Please enter valid information')</script>";
-    }
+  $query = "UPDATE tblregister SET `password`='$p1' WHERE `userid`='$userid'";
+  if(mysqli_query($con, $query)){
+      echo "<script type='text/javascript'>alert('Password reset successfully')</script>";
+      
+      header("location: login.php");
+  }else{
+      echo "<script type='text/javascript'>alert('Password reset failed')</script>";
+  }
 }
 ?>
 
@@ -63,36 +41,30 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
   <body>
         <div class="wrapper">
         <div class="title-wrapper">
-        <h2>HarmonyCare</h2>
+        <h2>Reset Password</h2>
         </div>
 
 
     <form method="POST">
-      <div class="role-select">
+      <!-- <div class="role-select">
         <select name="role" required>
             <option value="" disabled selected>Select Role</option>
             <option value="Caregiver">Caregiver</option>
             <option value="Care Recipient">Care Recipient</option>
         </select>
-     </div>
+     </div> -->
       <div class="input-box">
-        <input type="text" placeholder="Email" name="email" required>
+        <input type="password" placeholder="New Password" name="p1" required>
       </div>
       <div class="input-box">
-        <input type="password" placeholder="Password" name="password" required>
+        <input type="password" placeholder="Re-enter Password" name="p2" required>
       </div>
       <div class="input-box button">
-        <input type="submit" value="Login">
+        <input type="submit" value="OK">
       </div>
-      <div class="text">
+      <!-- <div class="text">
         <h3>Haven't signed up as a member? <a href="signup.php">Join Us Now</a></h3>
-      </div>
-      <div class="text">
-        <h3><a href="forgotpassword.php">Forgot Password</a></h3>
-      </div>
-      
-
-      
+      </div> -->
     </form>
 
     </div>
@@ -196,21 +168,13 @@ form .text h3{
  width: 100%;
  text-align: center;
 }
-/* form .text h3 a{
+form .text h3 a{
   color: #4070f4;
   text-decoration: none;
 }
 form .text h3 a:hover{
-  text-decoration: underline; */
-/* } */
-a{
-  color: #4070f4;
-  text-decoration: none;
-}
-a:hover{
   text-decoration: underline;
 }
-
 
 .role-select {
   position: absolute;

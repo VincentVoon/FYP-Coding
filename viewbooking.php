@@ -75,6 +75,11 @@ if (mysqli_num_rows($result) > 0) {
 // Close database connection
 mysqli_close($conn);
 ?>
+<?php
+function deleteRecord(){
+
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -251,13 +256,24 @@ mysqli_close($conn);
                     <p class="card-text">Special: <?php echo $appointment['special']; ?></p>
                     <p class="card-text">Status: <?php echo $appointment['status']; ?></p>
                 </div>
+                <!-- delete button -->
+                 <!-- Delete form -->
+                <form method="post" action="delete_appointment.php" onsubmit="return confirm('Are you sure you want to delete this appointment?');">
+                    <input type="hidden" name="bookingid" value="<?php echo $appointment['bookingid']; ?>">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
             </div>
         </div>
         <?php endforeach; ?>
     </div>
 </div>
 <!-- Appointment Information Column End -->
-
+<style>
+    .delete{
+        width: 100px;
+        height: 50px;
+    }
+</style>
 
 
      <!-- Footer Start -->
@@ -349,3 +365,4 @@ mysqli_close($conn);
         border: 1px solid #000000; /* Black border */
     }
 </style>
+    

@@ -31,10 +31,15 @@ $sender = "gideon7217@gmail.com";
 if ($con->query($sqlUpdateOTP) === TRUE) {
     mailNotification($email,$name,$status);
 	$response = array('status' => 'success', 'data' => null);
-    sendJsonResponse($response);
+    // sendJsonResponse($response);
+    echo "<script type='text/javascript'>alert('Appointment $status'); window.location.href='admindash.php';</script>";
+
+
 }else{
 	$response = array('status' => 'failed', 'data' => null);
-	sendJsonResponse($response);
+	// sendJsonResponse($response);
+    echo "<script type='text/javascript'>alert('Request failed'); window.location.href='admindash.php';</script>";
+
 }
 
 

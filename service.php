@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+include_once('db.php');
 $conn = mysqli_connect('localhost', 'root', '', 'appointment') or die('connection failed');
 
 // Check connection
@@ -16,16 +17,28 @@ if (isset($_POST['submit'])) {
     $time = $_POST['time'];
     $special = $_POST['special'];
 
+    // Assuming you have stored the userid in a session variable named 'userid'
+    // Replace 'userid' with the actual session variable name
+    if(isset($_SESSION['userid']) && !empty($_SESSION['userid'])) {
+        $userid = $_SESSION['userid'];
+    } else {
+        // Handle the case where the userid is not set in the session
+        // You might redirect the user to the login page or display an error message
+        echo "<script type='text/javascript'>alert('User not logged in. Please login first.')</script>";
+        exit();
+    }
+
+    
     // Check if the selected date and time already have an appointment for the same service
-    $check_query = "SELECT * FROM fyp_coding WHERE date = '$date' AND time = '$time' AND services = '$services'";
-    $result = mysqli_query($conn, $check_query);
+    $check_query = "SELECT * FROM tblappointment WHERE date = '$date' AND time = '$time' AND services = '$services'";
+    $result = mysqli_query($con, $check_query);
     
     // If an appointment exists for the same service, display an error message
     if (mysqli_num_rows($result) > 0) {
         echo "<script type='text/javascript'>alert('Appointment at selected date and time already exists. Please choose a different time.')</script>";
     } else {
         // If no appointment exists for the same service at the selected date and time, insert the new appointment
-        $insert = mysqli_query($conn, "INSERT INTO fyp_coding(mobile, services, date, time, special) VALUES ('$mobile','$services','$date','$time','$special')");
+        $insert = mysqli_query($con, "INSERT INTO tblappointment(userid, mobile, services, date, time, special) VALUES ('$userid','$mobile','$services','$date','$time','$special')");
         if ($insert) {
             echo "<script type='text/javascript'>alert('Appointment Made Successfully')</script>";
         } else {
@@ -104,7 +117,7 @@ if (isset($_POST['submit'])) {
                 
                 <div class="h-100 d-inline-flex align-items-center">
                     <?php
-                    session_start(); // Start the session
+                    // session_start(); // Start the session
 
                      if(isset($_SESSION['userid'])) {
                         echo '<span class="text-primary me-1">Welcome Back!</span>';

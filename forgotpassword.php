@@ -1,50 +1,85 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+
 session_start();
-include("db.php");
+include_once("db.php");
+
+$servername = `http://localhost`;
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $email = $_POST['email'];
-    $password = $_POST['password'];
-    $role = $_POST['role']; // Get the selected role during login
+    
 
-    if (!empty($email) && !empty($password) && !empty($role) && !is_numeric($email)) {
-        $query = "SELECT * FROM tblregister WHERE email = '$email' LIMIT 1";
-        $result = mysqli_query($con, $query);
+    if (!empty($email) && !is_numeric($email)) {
+      $userid = isEmailExist($email); 
 
-        if ($result && mysqli_num_rows($result) > 0) {
-            $user_data = mysqli_fetch_assoc($result);
-
-            if ($user_data['password'] == $password) {
-                // Check if the role matches
-                if ($user_data['role'] == $role) {
-                      $_SESSION['userid']=$user_data['userid'];
-                      $_SESSION['name']=$user_data['name'];
-                      $_SESSION['email']=$user_data['email'];
-
-                      $_SESSION['role']=$user_data['role'];
-                    // Redirect based on role
-                    if ($role == 'Caregiver') {
-                    
-                        header("location: admindash.php");
-                        die;
-                    } else if ($role == 'Care Recipient') {
-       
-                        header("location: index.php");
-                        die;
-                    }
-                } else {
-                    echo "<script type='text/javascript'>alert('You cannot login with the selected role')</script>";
-                }
-            } else {
-                echo "<script type='text/javascript'>alert('Wrong Email or Password')</script>";
-            }
-        } else {
-            echo "<script type='text/javascript'>alert('Wrong Email or Password')</script>";
-        }
+      if($userid == -1){
+        echo "<script type='text/javascript'>alert('Email not exists')</script>";
+      }
+      
+      sendMail($email,$userid);
     } else {
-        echo "<script type='text/javascript'>alert('Please enter valid information')</script>";
+        echo "<script type='text/javascript'>alert('Please enter valid email')</script>";
     }
 }
+
+function isEmailExist($email) {
+  global $con; // Make sure to use the global $con variable
+  $query = "SELECT userid FROM tblregister WHERE email = '$email'";
+  $result = mysqli_query($con, $query);
+
+  if ($result && mysqli_num_rows($result) > 0) {
+      $row = mysqli_fetch_assoc($result);
+      return $row['userid'];
+  } else {
+      return -1;
+  }
+}
+
+function sendMail($email,$userid){
+  global $servername;
+  $subject = 'Forgot Password';
+  $body = "
+            <!DOCTYPE html>
+            <html>
+              <body>
+                <a href=`http://localhost/fyp%20coding/resetpassword.php?userid=$userid`>Reset Password</a>
+              </body>
+            </html>
+          ";
+
+  $mail = new PHPMailer(true);
+  try {
+      $mail->isSMTP();                                            //Send using SMTP
+      $mail->Host       = 'smtp.gmail.com';                  //Set the SMTP server to send through
+      $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+      $mail->Username   = 'gideon7217@gmail.com';         //SMTP username
+      $mail->Password   = 'pfhdquckseyxurrg';                         //SMTP password
+      // $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+      $mail->SMTPSecure = "tls";            //Enable implicit TLS encryption
+      $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS
+  
+
+      //Recipients
+      $mail->setFrom('gideon7217@gmail.com');
+      $mail->addAddress($email);     //Add a recipient
+     
+      //Content
+      $mail->isHTML(true);                                  //Set email format to HTML
+      $mail->Subject = $subject;
+      $mail->Body    = $body;
+      $mail->send();
+      echo "<script type='text/javascript'>alert('Email sent')</script>";
+  } catch (Exception $e) {
+      echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+  }
+}
+
 ?>
 
 
@@ -63,36 +98,30 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
   <body>
         <div class="wrapper">
         <div class="title-wrapper">
-        <h2>HarmonyCare</h2>
+        <h2>Forgot Password</h2>
         </div>
 
 
     <form method="POST">
-      <div class="role-select">
+      <!-- <div class="role-select">
         <select name="role" required>
             <option value="" disabled selected>Select Role</option>
             <option value="Caregiver">Caregiver</option>
             <option value="Care Recipient">Care Recipient</option>
         </select>
-     </div>
+     </div> -->
       <div class="input-box">
         <input type="text" placeholder="Email" name="email" required>
       </div>
-      <div class="input-box">
+      <!-- <div class="input-box">
         <input type="password" placeholder="Password" name="password" required>
-      </div>
+      </div> -->
       <div class="input-box button">
         <input type="submit" value="Login">
       </div>
-      <div class="text">
+      <!-- <div class="text">
         <h3>Haven't signed up as a member? <a href="signup.php">Join Us Now</a></h3>
-      </div>
-      <div class="text">
-        <h3><a href="forgotpassword.php">Forgot Password</a></h3>
-      </div>
-      
-
-      
+      </div> -->
     </form>
 
     </div>
@@ -196,21 +225,13 @@ form .text h3{
  width: 100%;
  text-align: center;
 }
-/* form .text h3 a{
+form .text h3 a{
   color: #4070f4;
   text-decoration: none;
 }
 form .text h3 a:hover{
-  text-decoration: underline; */
-/* } */
-a{
-  color: #4070f4;
-  text-decoration: none;
-}
-a:hover{
   text-decoration: underline;
 }
-
 
 .role-select {
   position: absolute;
