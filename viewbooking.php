@@ -20,11 +20,9 @@ if ($conn->connect_errno) {
 
 // Retrieve appointments for the logged-in user
 $userid = $_SESSION['userid'];
-if($_SESSION['role'] =="Caregiver"){
-    // $query = "SELECT * FROM tblappointment";
-}else{
-    $query = "SELECT * FROM tblappointment WHERE userid = $userid";
-}
+
+$query = "SELECT * FROM tblappointment WHERE userid = $userid";
+
 $result = mysqli_query($conn, $query);
 $appointmentList['appointment'] = array();
 
@@ -258,7 +256,7 @@ function deleteRecord(){
                 </div>
                 <!-- delete button -->
                  <!-- Delete form -->
-                <form method="post" action="delete_appointment.php" onsubmit="return confirm('Are you sure you want to delete this appointment?');">
+                <form method="post" action="delete_appointment.php" onsubmit="return confirm('Are you sure you want to delete this appointment?');"class="d-flex justify-content-center">
                     <input type="hidden" name="bookingid" value="<?php echo $appointment['bookingid']; ?>">
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>

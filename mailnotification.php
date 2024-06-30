@@ -51,8 +51,37 @@ function sendJsonResponse($sentArray)
 
 
 function mailNotification($email,$name,$status){
-    $subject = 'Notification';
-    $body = "Dear Mr/Mrs, please check your appointment status.";
+    $subject = 'Appointment Status';
+    $body = "
+             <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                }
+                .container {
+                    text-align: center;
+                    padding: 20px;
+                }
+                .header {
+                    font-size: 24px;
+                    margin-bottom: 20px;
+                }
+                
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <i class='far fa-hospital me-3'></i>HarmonyCare - Elderly Care Service and Booking System
+                </div>
+                <p>Dear Mr/Mrs:</p><p> Please check your appointment status.</p>
+                
+            </div>
+        </body>
+        </html>
+    ";
 
     $mail = new PHPMailer(true);
     try {

@@ -43,15 +43,37 @@ function isEmailExist($email) {
 
 function sendMail($email,$userid){
   global $servername;
-  $subject = 'Forgot Password';
+  $subject = 'Reset Your Password';
   $body = "
-            <!DOCTYPE html>
-            <html>
-              <body>
-                <a href=`http://localhost/fyp%20coding/resetpassword.php?userid=$userid`>Reset Password</a>
-              </body>
-            </html>
-          ";
+             <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                }
+                .container {
+                    text-align: center;
+                    padding: 20px;
+                }
+                .header {
+                    font-size: 24px;
+                    margin-bottom: 20px;
+                }
+                
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <i class='far fa-hospital me-3'></i>HarmonyCare - Elderly Care Service and Booking System
+                </div>
+                <p>We received a request to reset your password. Click the link below to reset your password:</p>
+                <a href='http://localhost/fyp%20coding/resetpassword.php?userid=$userid' class='reset-link'>Reset Password</a>
+            </div>
+        </body>
+        </html>
+    ";
 
   $mail = new PHPMailer(true);
   try {

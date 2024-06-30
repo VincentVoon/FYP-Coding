@@ -2,29 +2,25 @@
 session_start();
 include("db.php");
 
-
 $userid = $_GET['userid'];
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
   $p1 = $_POST['p1'];
   $p2 = $_POST['p2'];
 
-  if($p1 != $p2){
-      echo "<script type='text/javascript'>alert('Password and Confirm Password do not match')</script>";
+  if ($p1 != $p2) {
+      echo "<script type='text/javascript'>alert('Password and Confirm Password do not match');</script>";
       return;
   }
 
   $query = "UPDATE tblregister SET `password`='$p1' WHERE `userid`='$userid'";
-  if(mysqli_query($con, $query)){
-      echo "<script type='text/javascript'>alert('Password reset successfully')</script>";
-      
-      header("location: login.php");
-  }else{
-      echo "<script type='text/javascript'>alert('Password reset failed')</script>";
+  if (mysqli_query($con, $query)) {
+      echo "<script type='text/javascript'>alert('Password reset successfully'); window.location.href='login.php';</script>";
+  } else {
+      echo "<script type='text/javascript'>alert('Password reset failed');</script>";
   }
 }
 ?>
-
 
 
 
